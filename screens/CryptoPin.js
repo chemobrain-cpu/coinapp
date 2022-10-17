@@ -3,22 +3,21 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
+    Pressable,
     SafeAreaView,
     ScrollView,
     Dimensions,
 } from "react-native";
 
 import { Feather, AntDesign } from '@expo/vector-icons';
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import Error from "../component/errorComponent";
 import { useRoute } from "@react-navigation/native";
-import { Withdrawal } from "../store/action/appStorage";
+import { topUp } from "../store/action/appStorage";
 import Loader from '../loaders/Loader';
 import AuthModal from '../modals/authModal'
 
-
-const Withdraw = ({ navigation }) => {
+const CryptoPin = ({ navigation }) => {
     const route = useRoute();
     let [value, setValue] = useState("")
     let [isLoading, setIsLoading] = useState(false)
@@ -27,8 +26,6 @@ const Withdraw = ({ navigation }) => {
     const [isAuthError, setIsAuthError] = useState(false)
     const [authInfo, setAuthInfo] = useState("")
     const [modalVisible, setModalVisible] = useState("")
-    const [url, setUrl] = useState("")
-    let { user } = useSelector(state => state.userAuth)
 
     const dispatch = useDispatch()
 
@@ -43,6 +40,9 @@ const Withdraw = ({ navigation }) => {
 
     }
 
+
+
+
     //deciding where to go depending on the action
     let navigateToCard = () => {
         if (userStatus == 'pay') {
@@ -52,7 +52,7 @@ const Withdraw = ({ navigation }) => {
             navigation.navigate('VerifyId')
         }
         else if (userStatus == 'insufficient') {
-            //navigate user to Withdrawal
+            //navigate user to topup
             return
 
         }
@@ -65,10 +65,10 @@ const Withdraw = ({ navigation }) => {
         }
     }
 
-    /*
-        let modalHandler = () => {
-            setModalVisible(prev => !prev)
-        }*/
+
+    let modalHandler = () => {
+        setModalVisible(prev => !prev)
+    }
 
     //button function
     let button = (num) => {
@@ -109,29 +109,17 @@ const Withdraw = ({ navigation }) => {
 
 
     let proceedHandler = async () => {
-        //check if user has that amount
-
-        if (Number(user.accountBalance) < Number(value)) {
-            setIsAuthError(true)
-            setAuthInfo('insufficient fund')
-            setIsLoading(false)
-            setUrl('WithdrawFund')
-            return
-
-        }
         setIsLoading(true)
-        let res = await dispatch(Withdrawal({ amount: value }))
+        let res = await dispatch(topUp({ amount: value }))
         if (!res.bool) {
             setIsAuthError(true)
             setAuthInfo(res.message)
             setIsLoading(false)
-            setUrl(res.url)
-
             return
+
         }
         setIsAuthError(true)
-        setIsAuthError(true)
-        setAuthInfo("Transaction is being processed")
+        setAuthInfo('Account topup successful')
         setIsLoading(false)
 
     }
@@ -139,12 +127,14 @@ const Withdraw = ({ navigation }) => {
 
     let changeVisibility = () => {
         setIsAuthError(prev => !prev)
-        if (url) {
-            navigation.navigate(url)
-
-        }
-        return
     }
+
+
+
+
+
+
+
 
 
     if (isLoading) {
@@ -160,18 +150,18 @@ const Withdraw = ({ navigation }) => {
         {/* modal for proceeding*/}
         {isAuthError && <AuthModal modalVisible={isAuthError} updateVisibility={changeVisibility} message={authInfo} />}
 
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <SafeAreaView style={styles.screen}>
             <ScrollView contentContainerStyle={styles.scrollContainer} stickyHeaderIndices={[0]}>
                 <View style={{ display: 'flex', width: '100%' }}>
-                    <View style={{ ...styles.headerContainer, }}>
-                        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerContainerIcon} >
+                    <View style={styles.headerContainer}>
+                        <Pressable onPress={() => navigation.goBack()} style={styles.headerContainerIcon} >
                             <AntDesign name="close" size={23} />
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity style={styles.headerContainerTitle} >
-                            <Text style={styles.title}>${Number(user.accountBalance).toFixed(2)} available !</Text>
+                        <Pressable style={styles.headerContainerTitle} >
+                            <Text style={styles.title}>Top Up Account</Text>
 
-                        </TouchableOpacity>
+                        </Pressable>
 
 
 
@@ -212,70 +202,70 @@ const Withdraw = ({ navigation }) => {
 
                 <View style={styles.calculatorCon}>
                     <View style={styles.numberContainer}>
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('1')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('1')}>
                             <Text style={styles.number}>1</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('2')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('2')}>
                             <Text style={styles.number}>2</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('3')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('3')}>
                             <Text style={styles.number}>3</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
                     </View>
                     <View style={styles.numberContainer}>
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('4')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('4')}>
                             <Text style={styles.number}>4</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('5')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('5')}>
                             <Text style={styles.number}>5</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('6')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('6')}>
                             <Text style={styles.number}>6</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
                     </View>
                     <View style={styles.numberContainer}>
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('7')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('7')}>
                             <Text style={styles.number}>7</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('8')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('8')}>
                             <Text style={styles.number}>8</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('9')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('9')}>
                             <Text style={styles.number}>9</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
                     </View>
 
                     <View style={styles.numberContainer}>
-                        <TouchableOpacity style={styles.numberButton} onPress={() => point(".")}>
+                        <Pressable style={styles.numberButton} onPress={() => point(".")}>
                             <Text style={styles.number}>.</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity style={styles.numberButton} onPress={() => button('0')}>
+                        <Pressable style={styles.numberButton} onPress={() => button('0')}>
                             <Text style={styles.number}>0</Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
-                        <TouchableOpacity style={styles.numberButton} onPress={() => deleteHandler()}>
+                        <Pressable style={styles.numberButton} onPress={() => deleteHandler()}>
                             <Feather name="arrow-left" size={22} color="rgb(44, 44, 44)" />
-                        </TouchableOpacity>
+                        </Pressable>
 
                     </View>
 
                 </View>
 
                 <View style={styles.buttonCon}>
-                    <TouchableOpacity style={{ ...styles.button }} onPress={proceedHandler}>
-                        <Text style={styles.buttonText}>Withdraw fund</Text>
+                    <Pressable style={{ ...styles.button }} onPress={proceedHandler}>
+                        <Text style={styles.buttonText}>Continue</Text>
 
-                    </TouchableOpacity>
+                    </Pressable>
 
                 </View>
 
@@ -288,31 +278,35 @@ const Withdraw = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    screen:{ 
+        flex: 1, 
+        backgroundColor: '#fff' 
+    },
 
     scrollContainer: {
         width: Dimensions.get('window').width,
         paddingHorizontal: 15,
     },
     headerContainer: {
-        paddingTop: 60,
+        paddingTop: 40,
         display: "flex",
         flexDirection: "row",
         marginBottom: 45,
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#fff'
+    },
+    headerContainerIcon: {
+      
+
     },
     headerContainerTitle: {
-        paddingLeft: 30
-
+        paddingLeft: 50
     },
 
-
-
     title: {
-        fontSize: 22,
+        fontSize: 20,
         fontFamily: 'Poppins',
 
-        textAlign: 'center'
     },
     balance: {
         fontSize: 17,
@@ -471,18 +465,18 @@ const styles = StyleSheet.create({
     button: {
         width: '95%',
         backgroundColor: '#1652f0',
-        paddingVertical: 15,
+        paddingVertical: 16,
         borderRadius: 30,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },
     buttonText: {
-        fontSize: 15,
+        fontSize: 18,
         fontFamily: "ABeeZee",
         color: '#fff',
 
     }
 })
 
-export default Withdraw;
+export default CryptoPin;

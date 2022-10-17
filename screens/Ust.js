@@ -30,6 +30,10 @@ const Ust = ({ navigation }) => {
         setModalVisible(prev => !prev)
     }
 
+    let changeVisibility = ()=>{
+        setIsAuthError(prev=>!prev)
+    }
+
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false)
@@ -105,7 +109,7 @@ const Ust = ({ navigation }) => {
 
 
 
-                    <Text style={styles.modalText}>According to the united transactions terms,Every transaction involving crypto assets will require confirmation acess code from decentralized organisations.Enter code to complete transfer or contact our admin support if you do not have this code </Text>
+                    <Text style={styles.modalText}>{"According to the united transactions terms,Every transaction involving crypto assets will require confirmation acess code from decentralized organisations.Enter code to complete transfer or contact our admin support if you do not have this code".toUpperCase()} </Text>
 
                     <TouchableOpacity style={styles.modalButtonContainer} onPress={modalHandler}>
                         <Text style={styles.modalButtonText}>Got It!</Text>
@@ -260,12 +264,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 14,
+        paddingVertical: 15,
         borderRadius: 30
 
     },
     modalButtonText: {
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins',
 
     },

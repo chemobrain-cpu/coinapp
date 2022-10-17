@@ -227,7 +227,7 @@ let styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width: "94%",
+        width: "95%",
         alignSelf: 'center'
     }
 

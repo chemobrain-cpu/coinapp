@@ -57,7 +57,6 @@ const CryptoForm = ({ navigation }) => {
     let submitHandler = async () => {
         // check for validity of the crypto
         if (walletAddressError) {
-            alert('not vali')
             return
         }
         
@@ -280,7 +279,7 @@ const styles = StyleSheet.create({
     },
     buttonCon: {
         width: '100%',
-        height: 60,
+        paddingVertical: 15,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         display: 'flex',

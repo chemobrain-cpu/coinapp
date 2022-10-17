@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Pressable,Image } from 'react-native'
-import { Feather } from '@expo/vector-icons';
+import { Feather,Ionicons } from '@expo/vector-icons';
 import moment from 'moment'
 
 
@@ -11,7 +11,7 @@ const GiftNotification = ({ topic,date,text,price,trade }) => {
     return (<View style={styles.notificationContainer}>
         <Pressable onPress={()=>trade()} style={styles.innerLeft}>
             <View style={styles.topicContainer}>
-                <Text style={styles.topic}>Gift.</Text>
+                <Text style={styles.topic}><Ionicons name="notifications" size={24} color="rgb(100,100,100)" /></Text>
                 <Text style={styles.time}>{moment(date).from(moment())}</Text>
 
             </View>
@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: Dimensions.get('window').width,
         paddingVertical: 25,
+        borderBottomWidth:.5,
+        borderBottomColor:'rgb(230,230,230)',
+        paddingVertical:35
 
     },
     innerLeft: {
@@ -102,8 +105,8 @@ const styles = StyleSheet.create({
     },
     actionButton: {
         paddingHorizontal: 13,
-        paddingVertical: 10,
-        borderRadius: 25,
+        paddingVertical: 15,
+        borderRadius: 30,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
 
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 15,
         fontFamily: 'Poppins',
 
 

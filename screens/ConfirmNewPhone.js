@@ -222,12 +222,12 @@ const styles = StyleSheet.create({
     buttonContinueText: {
         color: '#fff',
         fontFamily: 'Poppins',
-        fontSize: 16,
+        fontSize: 15,
     },
     buttonResendText: {
         color: '#fff',
         fontFamily: 'Poppins',
-        fontSize: 16,
+        fontSize: 15,
         color: 'rgb(44, 44, 44)'
     },
 

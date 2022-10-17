@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     },
     
     withdrawButton:{
-        paddingVertical:15,
+        paddingVertical:17,
         backgroundColor:'rgb(240,240,240)',
         borderRadius:30,
         width:'100%',
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
          paddingBottom:15
     },
     footerButton:{
-        paddingVertical:15,
+        paddingVertical:17,
         display:'flex',
         alignItems:'center',
         justifyContent:'center',

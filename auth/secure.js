@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
 
     button:{
         width:'100%',
-        paddingVertical:15,
+        paddingVertical:17,
         borderRadius:30,
         backgroundColor:'#1652f0',
         marginBottom:50,
@@ -289,7 +289,7 @@ const styles = StyleSheet.create({
     buttonText:{
         color:'#fff',
         fontFamily: 'Poppins',
-        fontSize:16,
+        fontSize:15,
     }
 
 });

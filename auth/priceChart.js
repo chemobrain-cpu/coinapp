@@ -669,7 +669,7 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     backgroundColor: '#1652f0',
-    paddingVertical: 14,
+    paddingVertical: 15,
     marginHorizontal: '5%',
     borderRadius: 30,
     display: 'flex',
@@ -679,7 +679,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 15,
     fontFamily: 'Poppins'
   },
 

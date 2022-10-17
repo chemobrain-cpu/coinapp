@@ -147,7 +147,7 @@ let TradeList = ({ navigation }) => {
       <View style={styles.assetsheaderCon}>
 
         <View style={focus ? { ...styles.inputContainer, borderColor: '#1652f0' } : { ...styles.inputContainer }}>
-          <FontAwesome name="search" size={18} color={focus ? "#1652f0" : "rgb(44, 44, 44)"} />
+          <FontAwesome name="search" size={18} color={focus ? "#1652f0" : "black"} />
           <TextInput
             style={{ ...styles.input, borderColor: 'orange' }}
             onChangeText={changeText}

@@ -10,7 +10,7 @@ let WalletAssetLoader = ({ navigation,title }) => {
         <ScrollView stickyHeaderIndices={[0]}>
             <View style={styles.headerContainer}>
                 <View style={styles.assetsheaderCon}>
-                    <TouchableOpacity  style={styles.headerIconCon} onPress={navigation.goBack()}>
+                    <TouchableOpacity  style={styles.headerIconCon} >
                         <Feather name="arrow-left" size={25} color={"rgb(44,44,44)"} />
                     </TouchableOpacity>
 

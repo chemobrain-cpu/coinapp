@@ -9,7 +9,7 @@ const LimitFeature = ({ navigation }) => {
     
 
     const continueHandler = () => {
-        navigation.navigate('Camera')
+        navigation.navigate('VerifyId')
 
 
     }
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontFamily: 'Poppins',
-        fontSize: 16,
+        fontSize: 15,
     }
 
 });

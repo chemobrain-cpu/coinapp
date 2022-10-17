@@ -11,7 +11,7 @@ import {
   Modal,
 } from "react-native";
 
-import { Entypo, MaterialIcons, FontAwesome, Feather, AntDesign } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, FontAwesome, Feather, AntDesign,Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from "react-redux";
 import TopMovers from "../component/HomeTopMovers"
 import TopList from "../component/HomeTopList"
@@ -38,7 +38,6 @@ const Trades = ({ navigation }) => {
   let [isTrendingCoinsLoading, setIsTrendingCoinsLoading] = useState(true)
   let [isMoversLoading, setIsMoversLoading] = useState(true)
   let [isCoinLoading, setIsCoinLoading] = useState(true)
-  let [isNotifications, setIsNotifications] = useState([])
   let [isRunning, setIsRunning] = useState(true)
 
 
@@ -100,7 +99,7 @@ const Trades = ({ navigation }) => {
       {
         price: coin.current_price,
         percentage: parseFloat(coin.price_change_percentage_24h).toFixed(2),
-         name: coin.id.toLowerCase(),
+        name: coin.id.toLowerCase(),
         market_cap: coin.market_cap,
         total_volume: coin.total_volume, circulating_supply: coin.circulating_supply,
         market_cap_rank: coin.market_cap_rank
@@ -108,8 +107,6 @@ const Trades = ({ navigation }) => {
   }
 
   useEffect(() => {
-    
-    setIsNotifications(notifications)
     fetchData()
   }, [])
 
@@ -195,11 +192,11 @@ const Trades = ({ navigation }) => {
             </TouchableOpacity>
 
 
-            <TouchableOpacity  onPress={() => navigation.navigate('Notification')}>
-              <MaterialIcons name="notifications-none" size={30} color="black" />
+            <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
+            <Ionicons name="notifications"  size={30} color="black" />
               <View style={styles.notification}>
                 <View style={styles.notificationTextContainer}>
-                  <Text style={styles.notificationText}>{isNotifications.length}</Text>
+                  <Text style={styles.notificationText}>{user.notifications.length}</Text>
 
                 </View>
 
@@ -212,7 +209,7 @@ const Trades = ({ navigation }) => {
         </View>
 
         <View style={focus ? { ...styles.inputContainer, borderColor: '#1652f0' } : { ...styles.inputContainer }}>
-          <FontAwesome name="search" size={18} color={"grey"} style={{ marginBottom: 10 }} />
+          <FontAwesome name="search" size={18} color={"black"} style={{ marginBottom: 10 }} />
           <TextInput
             style={{ ...styles.input }}
             onChangeText={changeText}
@@ -245,12 +242,15 @@ const Trades = ({ navigation }) => {
 
             </TouchableOpacity>
           </View>
-
-
+          <View style={{ paddingLeft: 15 }}>
           {isTrendingCoinsLoading ? <MoversLoader /> : <TopList
             navigationHandler={navigationHandler}
             coins={trendingCoins}
           />}
+          </View>
+
+
+          
 
         </View>
         <View style={styles.moversection}>
@@ -271,10 +271,13 @@ const Trades = ({ navigation }) => {
             </TouchableOpacity>
 
           </View>
-          {isMoversLoading ? <MoversLoader /> : <TopMovers
-            navigationHandler={navigationHandler}
-            coins={topMoversCoinList}
-          />}
+          <View style={{ paddingLeft: 15 }}>
+            {isMoversLoading ? <MoversLoader /> : <TopMovers
+              navigationHandler={navigationHandler}
+              coins={topMoversCoinList}
+            />}
+          </View>
+
         </View>
 
         <View style={styles.assetsection}>
@@ -495,14 +498,13 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingTop: 15,
     paddingBottom: 30,
-    paddingHorizontal: 15,
     marginBottom: 50
   },
   assetsectionheading: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
   },
   assetlefttext: {
     fontSize: 20,

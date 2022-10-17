@@ -1,19 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, ScrollView, Pressable, StyleSheet, Dimensions } from 'react-native'
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from "react-redux";
 import GiftNotification from '../component/giftnotification';
 import Error from '../component/errorComponent'
+import Loader from '../loaders/Loader'
+import { getNotifications } from "../store/action/appStorage";
 
 
 const Notification = ({ navigation }) => {
     let [header, setHeader] = useState(false)
-    let { notifications } = useSelector(state => state.userAuth)
     const [isError, setIsError] = useState(false)
+    let [isLoading, setIsLoading] = useState(true)
+    let [notifications, setNotifications] = useState(true)
     let dispatch = useDispatch()
 
 
+    useEffect(() => {
+        fetchNotification()
+    }, [])
 
+    let fetchNotification = async()=>{
+        setIsLoading(true)
+        let res = await dispatch(getNotifications())
+
+        if(!res.bool){
+            setIsError(true)
+            setIsLoading(false)
+            return
+        }
+        
+        setNotifications(res.message)
+        setIsLoading(false)
+
+    }
 
 
     const scrollHandler = (e) => {
@@ -28,18 +48,20 @@ const Notification = ({ navigation }) => {
         navigation.navigate('TradeList')
     }
 
-    const setting = ()=>{
+    const setting = () => {
         navigation.navigate('ProfileSetting')
     }
-
-
 
     if (isError) {
         //navigate to error
         return <Error
-            tryAgain={readData}
+            tryAgain={fetchNotification}
 
         />
+    }
+
+    if (isLoading) {
+        return <Loader />
     }
 
     return (

@@ -9,36 +9,32 @@ import {
     Image,
     Dimensions
 } from "react-native";
-import { Entypo, MaterialIcons } from '@expo/vector-icons';
-import {useSelector } from "react-redux";
+import { Entypo, MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { useSelector } from "react-redux";
 import PayLoaders from '../loaders/payloader'
 
-const Pay = ({navigation}) => {
+const Pay = ({ navigation }) => {
     let [isLoading, setIsLoading] = useState(true)
     let [text, setText] = useState('')
     let [focus, setFocus] = useState(false)
-    let { user,notifications } = useSelector(state => state.userAuth)
-    let [isNotifications, setIsNotifications] = useState([])
+    let { user} = useSelector(state => state.userAuth)
 
 
-    const navigateToRecieve = ()=>{
+    const navigateToRecieve = () => {
         navigation.navigate('Recieve')
     }
-    const navigateToSend = ()=>{
+    const navigateToSend = () => {
         navigation.navigate('PaymentChoice')
     }
 
-    
+
     useEffect(() => {
         setIsLoading(true)
-      
-
-        setIsNotifications(notifications)
         setTimeout(() => {
             setIsLoading(false)
         }, 4000)
 
-    },[])
+    }, [])
 
     if (isLoading) {
         return <PayLoaders />
@@ -61,10 +57,10 @@ const Pay = ({navigation}) => {
 
 
                         <TouchableOpacity >
-                            <MaterialIcons name="notifications-none" size={30} color="black" />
+                            <Ionicons name="notifications" size={30} color="black" />
                             <View style={styles.notification}>
                                 <View style={styles.notificationTextContainer}>
-                                    <Text style={styles.notificationText}>{isNotifications.length}</Text>
+                                    <Text style={styles.notificationText}>{user.notifications.length}</Text>
 
                                 </View>
 
@@ -95,13 +91,13 @@ const Pay = ({navigation}) => {
 
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={{ ...styles.button, backgroundColor: 'rgb(240,240,240)' }} onPress={navigateToRecieve}>
-                        <Text style={{...styles.buttonText,color:'black'}}>
+                        <Text style={{ ...styles.buttonText, color: 'black' }}>
                             Recieve
                         </Text>
 
                     </TouchableOpacity>
                     <TouchableOpacity style={{ ...styles.button, backgroundColor: '#1652f0' }} onPress={navigateToSend}>
-                        <Text style={{...styles.buttonText}}>
+                        <Text style={{ ...styles.buttonText }}>
                             Send
                         </Text>
 
@@ -171,7 +167,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins',
     },
 
-    
+
     cryptogiftContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -225,7 +221,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontFamily: 'Poppins',
-        fontSize: 16
+        fontSize: 15
 
     }
 

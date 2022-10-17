@@ -514,11 +514,11 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
-
     },
+
     buttonText: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins',
     }
 

@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     firstButton:{
         width:'90%',
         backgroundColor:'#1652f0',
-        paddingVertical:15,
+        paddingVertical:17,
         borderRadius:50,
         display:'flex',
         alignItems:'center',
@@ -192,20 +192,20 @@ const styles = StyleSheet.create({
     secondButton:{
         width:'90%',
         backgroundColor:'rgb(240,240,240)',
-        paddingVertical:15,
+        paddingVertical:17,
         borderRadius:50,
         display:'flex',
         alignItems:'center',
         justifyContent:'center'
     },
     footerButtonFirstText:{
-        fontSize:17,
+        fontSize:15,
         color:'#fff',
         fontFamily: 'Poppins'
        
     },
     footerButtonSecondText:{
-        fontSize:17,
+        fontSize:15,
         fontFamily: 'Poppins'
        
     }

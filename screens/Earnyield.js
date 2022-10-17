@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     button:{
         backgroundColor:'#1652f0',
-        paddingVertical:14,
+        paddingVertical:17,
         display:'flex',
         alignItems:'center',
         justifyContent:'center',
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     },
     buttonText:{
         color:'#fff',
-        fontSize:17,
+        fontSize:15,
         fontFamily:'Poppins'
     }
 

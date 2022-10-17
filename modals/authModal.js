@@ -14,14 +14,13 @@ const AuthModal = ({ modalVisible,updateVisibility,message }) => {
         >
             <View style={styles.modalBackground}>
                 
-
                 <View style={styles.modalView}>
 
                     <Text style={styles.modalState}>{message}</Text>
 
                     <View style={styles.modalButtonContainer}>
                         <TouchableOpacity style={styles.acceptBtn} onPress={() => updateVisibility()} >
-                            <Text>got it!</Text>
+                            <Text style={styles.acceptBtnText}>got it!</Text>
 
                         </TouchableOpacity>
 
@@ -88,9 +87,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: 16,
         fontFamily: 'ABeeZee',
         backgroundColor: 'rgb(240,240,240)',
+    },
+    acceptBtnText: {
+        fontSize: 15,
+        fontFamily: 'ABeeZee',
     },
   
     buttonClose: {

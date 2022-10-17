@@ -1,42 +1,45 @@
-import React, { useState} from 'react'
+import React, { useState,useEffect} from 'react'
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 import { useDispatch } from "react-redux";
 import { useRoute } from "@react-navigation/native";
-
+import Loader from '../loaders/Loader';
 //importing modals
 import AuthModal from '../modals/authModal'
 
 
 const Verification = ({ navigation }) => {
     const [isAuthError, setIsAuthError] = useState(false)
-  
+    let [isLoading, setIsLoading] = useState(true)
     const [authInfo, setAuthInfo] = useState("")
-    
-
     const route = useRoute()
     let dispatch = useDispatch()
 
-   
+    useEffect(()=>{
+        setTimeout(()=>{
+            setIsLoading(false)
 
+        },4000)
 
-
-    //getting email from previous page
-    const email = "arierhiprecious"
+    },[])
 
     //this handler check if user email has been verified
     const gobackHandler = async () => {
-        navigation.goBack()
-        
+        navigation.goBack() 
     }
 
     const updateAuthError = () => {
         setIsAuthError(prev => !prev)
     }
 
-
     const takePictureHandler = () => {
         navigation.navigate('Camera')
     }
+
+    if (isLoading) {
+        return <Loader />
+    }
+
+
 
 
 
@@ -50,7 +53,7 @@ const Verification = ({ navigation }) => {
                 <View style={styles.imageContainer}>
                     <Image
                         source={require('../assets/icons/secure.jpg')}
-                        style={{ width: 350, height: 350, }} />
+                        style={{ width: 190, height: 290, }} />
 
                 </View>
 
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
     },
 
     headerText: {
-        fontSize: 22,
+        fontSize: 24,
         marginBottom: 10,
         textAlign: 'center',
         fontFamily: 'Poppins',
@@ -137,9 +140,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center',
         fontWeight: '200',
-        color: 'rgb(100,100,100)',
-        fontSize: 19,
-        fontFamily: 'ABeeZee'
+        color: 'rgb(120,120,120)',
+        fontSize: 17,
+        fontFamily: 'Poppins'
     },
     email: {
         color: 'rgb(44, 44, 44)',

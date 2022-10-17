@@ -1,15 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, ScrollView, Pressable, StyleSheet, Image, Dimensions, TextInput,Linking,Share} from 'react-native'
-import { Feather, MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
+import Loader from '../loaders/Loader';
 
 import * as Clipboard from 'expo-clipboard';
 import { Card } from "react-native-shadow-cards"
+import { useSelector} from "react-redux"
+import {truncate} from "../utils/util"
 
 const InviteFriend = ({ navigation }) => {
     const [header, setHeader] = useState(false);
     let [copyActionStyle,setCopyActionStyle] = useState('')
+    let [isLoading, setIsLoading] = useState(true)
     //the user link will be gotten from redux
     const [link, setLink] = useState('coinbas...rierhi_c')
+    let { user } = useSelector(state => state.userAuth)
+    useEffect(()=>{
+        /*
+        let url = truncate('coinbaseether.com',6)
+        let username = truncate(user.lastName,5)
+        let fullUrl = `${url}${username}`
+        */
+
+
+
+        let url = 'coinbaseether.com'
+        let username = user.lastName
+        let fullUrl = `${url}/${username}`
+        setLink(fullUrl)
+        setTimeout(()=>{
+            setIsLoading(false)
+
+        },4000)
+
+    },[])
+
+
 
     const scrollHandler = (e) => {
         if (e.nativeEvent.contentOffset.y > 5) {
@@ -43,7 +69,6 @@ const InviteFriend = ({ navigation }) => {
         return await Linking.openURL(`whatsapp://send?text=${link}`)
 
     }
-
     const share = async()=>{
        await  Share.share({
             message:`${link}`,
@@ -57,13 +82,14 @@ const InviteFriend = ({ navigation }) => {
     const navigateToCryptoCalculator = ()=>{
         navigation.navigate("Send")
     }
-
-
-
     const writeToClipboard = async () => {
+        let url = 'coinbaseether.com'
+        let username = user.lastName
+        let fullUrl = `${url}/${username}`
         //To copy the text to clipboard
+        
         setCopyActionStyle(true)
-        Clipboard.setStringAsync(link)
+        Clipboard.setStringAsync(fullUrl)
         timer = setTimeout(()=>{
             changeStyle()
 
@@ -72,6 +98,10 @@ const InviteFriend = ({ navigation }) => {
         
 
     };
+
+    if (isLoading) {
+        return <Loader />
+    }
 
     return (
         <SafeAreaView style={styles.screen}>
@@ -99,7 +129,7 @@ const InviteFriend = ({ navigation }) => {
 
                 </Pressable>
 
-                <Text style={styles.promiseText}>you'll both get rewarded when your friend trades $ 100.00 in crypto.</Text>
+                <Text style={stylesz.promiseText}>you'll both get rewarded when your friend trades $ 100.00 in crypto.</Text>
                 <Text style={styles.termsText}>Terms Apply</Text>
 
                 <View style={styles.sharableLinkContainer}>
@@ -109,7 +139,7 @@ const InviteFriend = ({ navigation }) => {
                         <TextInput
                             style={styles.input}
                             editable={false}
-                            value={link}
+                            value={truncate(link,12)}
                         />
                         <Pressable style={{...styles.button,backgroundColor:copyActionStyle?'green':'#1652f0'}} onPress={writeToClipboard}>
                             <Text style={styles.buttonText}>{copyActionStyle?'copied':'copy'}</Text>
@@ -180,12 +210,6 @@ const InviteFriend = ({ navigation }) => {
 
                     </Pressable>
                     
-
-
-
-
-
-
                 </View>
 
 

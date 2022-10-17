@@ -16,10 +16,9 @@ export const READNOTIFICATION = 'READNOTIFICATION'
 export const ADD_ID = "ADD_ID"
 export const LOGOUT = "LOGOUT"
 export const UPDATEUSER = "UPDATEUSER"
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ErrorModal from '../../modals/errorModal';
-export let socket = IO(`http://192.168.42.191:8080/`)
+export let socket = IO(`http://192.168.42.108:8080/`)
 import { RNS3 } from "react-native-aws3"
 let timer
 
@@ -37,13 +36,12 @@ let calculateRemainingTime = (expiryDate) => {
 
 let retrievedStoredToken = async () => {
   let tokenFromStorage = await AsyncStorage.getItem('token');
-  let expiryDate = await AsyncStorage.getItem('expiry');
-
-  const timeLeft = calculateRemainingTime(expiryDate)
+  let expiryDate = await AsyncStorage.getItem('tokenExpiry');
+  
+  const timeLeft = calculateRemainingTime(Number(expiryDate))
   if (timeLeft <= 3600) {
-
     await AsyncStorage.removeItem('token')
-    await AsyncStorage.removeItem('expiry')
+    await AsyncStorage.removeItem('tokenExpiry')
     await AsyncStorage.removeItem('userId')
 
     return {
@@ -57,12 +55,14 @@ let retrievedStoredToken = async () => {
   }
 
 }
+
 export const checkIfIsLoggedIn = () => {
   return async (dispatch, getState) => {
     try {
       let response
       //check if token is expired
-      let { token, expiresIn } = retrievedStoredToken()
+      let { token, expiresIn } = await retrievedStoredToken()
+
       if (!token) {
         return {
           bool: false,
@@ -71,17 +71,18 @@ export const checkIfIsLoggedIn = () => {
       }
       //convert expiresIN back to hours
       expiresIn = expiresIn / (60 * 60 * 1000)
-      await AsyncStorage.setItem('tokenExpiry', expiresIn);
+      await AsyncStorage.setItem('tokenExpiry', `${expiresIn}`);
       await AsyncStorage.setItem('token', token);
       let userId = await AsyncStorage.getItem('userId')
 
       if (!userId) {
+        
         return {
           bool: false,
           message: 'no stored user'
         }
       }
-      response = await fetch(`http://192.168.42.191:8080/auth/userbytoken`, {
+      response = await fetch(`http://192.168.42.108:8080/auth/userbytoken`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -91,15 +92,20 @@ export const checkIfIsLoggedIn = () => {
 
       if (response.status == 200) {
         let data = await response.json()
-        data.response.token = token
-        data.response.expiresIn = expiresIn
-        dispatch({ type: FORCEUSERIN, payload: data.response })
+        let res = {
+        }
+        res.user = data.response.user
+        res.token = token
+        res.expiresIn = expiresIn
+        res.notification = data.response.notification
 
+        dispatch({ type: FORCEUSERIN, payload:res})
         return {
           bool: true,
-          message: data.response
+          message: res
         }
       }
+
       if (response.status == 300) {
         let data = await response.json()
         return {
@@ -124,11 +130,10 @@ export const checkIfIsLoggedIn = () => {
   }
 }
 
-
 export const signup = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/emailsignup`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/emailsignup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -171,7 +176,7 @@ export const login = (data) => {
   return async (dispatch, getState) => {
     try {
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/login`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -230,7 +235,6 @@ export const login = (data) => {
         return {
           bool: true,
           message: data.response,
-
         }
 
       }
@@ -249,7 +253,7 @@ export const login = (data) => {
 export const verifiedEmail = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/confirmuserverification`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/confirmuserverification`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -289,7 +293,7 @@ export const verifiedEmail = (data) => {
 export const phoneNumber = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/phone`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/phone`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -337,7 +341,7 @@ export const changePhone = (data) => {
   return async (dispatch, getState) => {
     let { token } = getState().userAuth
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/changephone`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/changephone`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -381,13 +385,13 @@ export const changePhone = (data) => {
     }
   }
 }
-//new phone number confirmation
+//user update phone confirmation  phone number confirmation
 export const confirm = (data) => {
   return async (dispatch, getState) => {
     let { token } = getState().userAuth
    
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/confirmnewphone`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/confirmnewphone`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -439,11 +443,11 @@ export const confirm = (data) => {
     }
   }
 }
-//phone number confirmation
+//phone number confirmation on signup
 export const confirmPhone = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/confirmphone`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/confirmphone`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -473,8 +477,9 @@ export const confirmPhone = (data) => {
       }
       if (response.status === 200) {
         let data = await response.json()
+        
         //dispatch the credentials to redux store
-        await AsyncStorage.setItem('tokenExpiry', data.response.expiresIn);
+        await AsyncStorage.setItem('tokenExpiry', `${data.response.expiresIn}`);
         await AsyncStorage.setItem('token', data.response.token);
         await AsyncStorage.setItem('userId', data.response.user._id);
 
@@ -496,6 +501,8 @@ export const confirmPhone = (data) => {
     }
   }
 }
+
+
 export const goToHome = (data) => {
   return async (dispatch, getState) => {
     dispatch({ type: CLEANTEMPORAL,payload:""})
@@ -642,7 +649,7 @@ export const changeWalletAsset = (data) => {
 
 
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/changewalletaddress`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/changewalletaddress`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -674,7 +681,7 @@ export const changeWalletAsset = (data) => {
       if (response.status === 200) {
         let data = await response.json()
         //dispatch the credentials to redux store to update user
-        dispatch({ type: CHANGE_WALLET, payload: data.response.user })
+        dispatch({ type: CHANGE_WALLET, payload: data.response })
 
         return {
           bool: true,
@@ -699,7 +706,7 @@ export const addToWatchList = (data) => {
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/modifywatchlist`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/modifywatchlist`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -731,7 +738,7 @@ export const addToWatchList = (data) => {
       if (response.status === 200) {
         let data = await response.json()
         //dispatch the credentials to redux store to update user
-        dispatch({ type: MODIFY_WATCHLIST, payload: data.response.user })
+        dispatch({ type: MODIFY_WATCHLIST, payload: data.response})
 
         return {
           bool: true,
@@ -756,7 +763,7 @@ export const topUp = (value) => {
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/topup`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/topup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -788,7 +795,7 @@ export const topUp = (value) => {
       if (response.status === 200) {
         let data = await response.json()
         //dispatch the credentials to redux store to update user
-        dispatch({ type: TOPUP, payload: data.response.user })
+        dispatch({ type: TOPUP, payload: data.response})
 
         return {
           bool: true,
@@ -820,7 +827,7 @@ export const addPaymentMethod = (data) => {
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/paymentmethod`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/paymentmethod`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -854,7 +861,7 @@ export const addPaymentMethod = (data) => {
       if (response.status === 200) {
         let data = await response.json()
         //dispatch the credentials to redux store to update user
-        dispatch({ type: PAYMENT_METHOD, payload: data.response.user })
+        dispatch({ type: PAYMENT_METHOD, payload: data.response})
 
         return {
           bool: true,
@@ -929,7 +936,7 @@ export const uploadId = (data) => {
       data.imageUrl = imageUrl
 
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/addidentity`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/addidentity`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -993,7 +1000,7 @@ export const buyCrypto = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/buyasset`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/buyasset`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1053,7 +1060,7 @@ export const sellCrypto = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/sellasset`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/sellasset`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1113,7 +1120,7 @@ export const convertCrypto = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/convertasset`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/convertasset`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1172,7 +1179,7 @@ export const sendCrypto = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/sendasset`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/sendasset`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1249,7 +1256,7 @@ export const Withdrawal = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/withdraw`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/withdraw`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1326,7 +1333,7 @@ export const sendTaxCode = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/updatetaxcode`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/updatetaxcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1387,7 +1394,7 @@ export const sendUstCode = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/updateustcode`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/updateustcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1447,7 +1454,7 @@ export const sendKtcCode = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/updatektccode`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/updatektccode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1507,7 +1514,7 @@ export const sendTntCode = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.191:8080/auth/updatetntcode`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/updatetntcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1589,14 +1596,13 @@ export const getUserAssets = (pageNumber) => {
   }
 }
 
-
 export const addNotificationToken = (notificationtoken)=>{
   return async (dispatch, getState) => {
     let { token } = getState().userAuth
 
     try {
       
-      let response = await fetch(`http://192.168.42.191:8080/auth/notificationtoken`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/notificationtoken`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -1630,6 +1636,7 @@ export const addNotificationToken = (notificationtoken)=>{
       if (response.status === 200) {
 
         let data = await response.json()
+        dispatch({type:UPDATEUSER,payload:data.response})
 
         return {
           bool: true,
@@ -1649,13 +1656,13 @@ export const addNotificationToken = (notificationtoken)=>{
 
 }
 
-export const readNotification = ()=>{
+export const getNotifications = ()=>{
   return async (dispatch, getState) => {
     let { token } = getState().userAuth
 
     try {
       
-      let response = await fetch(`http://192.168.42.191:8080/auth/readnotification`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/notifications`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -1689,9 +1696,10 @@ export const readNotification = ()=>{
 
         let data = await response.json()
         
-        dispatch({ type: READNOTIFICATION, payload: data})
+       
         return {
           bool: true,
+          message: data.response
         }
 
        
@@ -1714,7 +1722,240 @@ export const updateCredentials = (data)=>{
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.191:8080/auth/credentials`, {
+      let response = await fetch(`http://192.168.42.108:8080/auth/credentials`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${token}`
+
+        },
+         body:JSON.stringify(data)
+      })
+      if (response.status === 404) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 400) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 300) {
+
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 200) {
+        let data = await response.json()
+        dispatch({ type: UPDATEUSER, payload: data.response })
+        
+        return {
+          bool: true,
+        }
+
+       
+      }
+
+    } catch (err) {
+      console.log(err)
+      return {
+        bool: false,
+        message: 'network error'
+      }
+    }
+
+  }
+
+}
+
+export const secureAccount = (data)=>{
+  return async (dispatch, getState) => {
+    let { token } = getState().userAuth
+
+    try {
+      let response = await fetch(`http://192.168.42.108:8080/auth/secureaccount`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${token}`
+
+        },
+         body:JSON.stringify(data)
+      })
+      if (response.status === 404) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 400) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 300) {
+
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 200) {
+        let data = await response.json()
+        dispatch({ type: UPDATEUSER, payload: data.response })
+        
+        return {
+          bool: true,
+        }
+
+       
+      }
+
+    } catch (err) {
+      console.log(err)
+      return {
+        bool: false,
+        message: 'network error'
+      }
+    }
+
+  }
+
+}
+export const offPinSwitch = (data)=>{
+  return async (dispatch, getState) => {
+    let { token } = getState().userAuth
+
+    try {
+      let response = await fetch(`http://192.168.42.108:8080/auth/offpinswitch`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${token}`
+
+        },
+         body:JSON.stringify(data)
+      })
+      if (response.status === 404) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 400) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 300) {
+
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 200) {
+        let data = await response.json()
+        dispatch({ type: UPDATEUSER, payload: data.response })
+        
+        return {
+          bool: true,
+        }
+
+       
+      }
+
+    } catch (err) {
+      console.log(err)
+      return {
+        bool: false,
+        message: 'network error'
+      }
+    }
+
+  }
+
+}
+export const onPinSwitch = (data)=>{
+  return async (dispatch, getState) => {
+    let { token } = getState().userAuth
+
+    try {
+      let response = await fetch(`http://192.168.42.108:8080/auth/onpinswitch`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "header": `${token}`
+
+        },
+         body:JSON.stringify(data)
+      })
+      if (response.status === 404) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 400) {
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 300) {
+
+        let data = await response.json()
+        return {
+          bool: false,
+          message: data.response
+        }
+      }
+      if (response.status === 200) {
+        let data = await response.json()
+        dispatch({ type: UPDATEUSER, payload: data.response })
+        
+        return {
+          bool: true,
+        }
+
+       
+      }
+
+    } catch (err) {
+      console.log(err)
+      return {
+        bool: false,
+        message: 'network error'
+      }
+    }
+
+  }
+
+}
+export const toggleBalance = (data)=>{
+  return async (dispatch, getState) => {
+    let { token } = getState().userAuth
+
+    try {
+      let response = await fetch(`http://192.168.42.108:8080/auth/togglebalance`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

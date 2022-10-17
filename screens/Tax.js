@@ -248,12 +248,12 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 14,
+        paddingVertical: 15,
         borderRadius: 30
 
     },
     modalButtonText: {
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins',
 
     },
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
     },
     footerButtonText: {
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins',
         color: '#fff',
         marginRight: 10

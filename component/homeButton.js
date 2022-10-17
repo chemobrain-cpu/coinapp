@@ -21,9 +21,9 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
     },
     action: {
-        width: 40,
-        height: 40,
-        borderRadius: 40,
+        width: 45,
+        height: 45,
+        borderRadius: 45,
         backgroundColor: '#1652f0',
         display: 'flex',
         alignItems: 'center',

@@ -6,9 +6,7 @@ import {
     TouchableOpacity,
     SafeAreaView,
     ScrollView,
-    Image,
     Dimensions,
-    ActivityIndicator
 } from "react-native";
 
 import { Feather, AntDesign } from '@expo/vector-icons';
@@ -493,14 +491,14 @@ const styles = StyleSheet.create({
     button: {
         width: '95%',
         backgroundColor: '#1652f0',
-        paddingVertical: 16,
+        paddingVertical: 15,
         borderRadius: 30,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 15,
         fontFamily: "ABeeZee",
         color: '#fff',
 

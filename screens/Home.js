@@ -6,18 +6,24 @@ import Button from '../component/homeButton'
 import TopMovers from "../component/HomeTopMovers"
 import TimelineContainer from "../component/homeTimeline"
 import Setup from "../component/setup"
-import { Entypo, MaterialIcons, MaterialCommunityIcons, Ionicons, AntDesign, Octicons } from '@expo/vector-icons';
+import { Entypo, Ionicons, AntDesign, Octicons, FontAwesome } from '@expo/vector-icons';
 import { Card } from "react-native-shadow-cards"
 import { timelineData } from "../data/data"
 import { useDispatch, useSelector } from "react-redux";
 import Error from '../component/errorComponent'
-import { loadCoins, loadWatchList} from "../store/action/appStorage";
+import { loadCoins, loadWatchList, addNotificationToken } from "../store/action/appStorage";
 import ShortListLoader from '../loaders/shortListLoader'
 import MoversLoader from "../loaders/moversLoader";
 import * as Notifications from 'expo-notifications';
 
-
-
+//push notification
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+    }),
+});
 
 
 const Home = ({ navigation }) => {
@@ -31,58 +37,67 @@ const Home = ({ navigation }) => {
     const [watchListCoins, setWatchListCoins] = useState([]);
     const [topMoversCoinList, setTopMoversCoinList] = useState([]);
     let [isMoversLoading, setIsMoversLoading] = useState(true)
-    let [isNotifications, setIsNotifications] = useState([])
-
-    let { user,notifications } = useSelector(state => state.userAuth)
 
     //notification
     const [expoPushToken, setExpoPushToken] = useState([]);
     const [notification, setNotification] = useState(false);
-    const notificationListener = useRef();
-    const responseListener = useRef()
 
+    let { user } = useSelector(state => state.userAuth)
 
     useEffect(() => {
         setIsLoading(true)
-       
 
-        setIsNotifications(notifications)
 
-       
+
         registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+        Notifications.addNotificationReceivedListener(notification => {
             setNotification(notification);
-        });
+        })
 
-        responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-           navigation.navigate('Notification')
-        });
-        async function schedulePushNotification() {
-            await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: "Congratulation 📬",
-                    body: 'you have a new message',
-                    data: { data: 'goes here' },
-                },
-                trigger: { 
-                    seconds: 2,
-                },
+        Notifications.addNotificationResponseReceivedListener(response => {
+            navigation.navigate('Notification')
+        })
+
+
+
+    }, []);
+
+    const registerForPushNotificationsAsync = async () => {
+        let token;
+
+        if (Platform.OS === 'android') {
+            await Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
             });
         }
 
 
-        schedulePushNotification().then(data=>{
-            setIsLoading(false)
-        });
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+        }
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+        //save the token in users account
 
-        return () => {
-            Notifications.removeNotificationSubscription(notificationListener.current);
-            Notifications.removeNotificationSubscription(responseListener.current);
-        };
-    }, []);
-
-
+        if (token) {
+            let res = await dispatch(addNotificationToken({ notificationToken: token }))
+            if (!res.bool) {
+                setIsError(true)
+            }
+        }
+        console.log(token)
+        return token;
+    }
 
 
 
@@ -135,7 +150,7 @@ const Home = ({ navigation }) => {
         navigation.navigate('BuyPriceChart',
             {
                 price: coin.current_price,
-                percentage: parseFloat(coin.price_change_percentage_24h).toFixed(2), 
+                percentage: parseFloat(coin.price_change_percentage_24h).toFixed(2),
                 name: coin.id.toLowerCase(),
                 market_cap: coin.market_cap,
                 total_volume: coin.total_volume, circulating_supply: coin.circulating_supply,
@@ -159,6 +174,7 @@ const Home = ({ navigation }) => {
         setIsError(false)
         setIsMounted(true)
         setIsLoading(true)
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
         fetchData()
         fetchWatchList()
     }
@@ -189,55 +205,6 @@ const Home = ({ navigation }) => {
 
         }
     }
-    //push notification
-    Notifications.setNotificationHandler({
-        handleNotification: async () => ({
-            shouldShowAlert: true,
-            shouldPlaySound: true,
-            shouldSetBadge: true,
-        }),
-    });
-
-
-    const registerForPushNotificationsAsync = async () => {
-        let token;
-
-        if (Platform.OS === 'android') {
-            await Notifications.setNotificationChannelAsync('default', {
-                name: 'default',
-                importance: Notifications.AndroidImportance.MAX,
-                vibrationPattern: [0, 250, 250, 250],
-                lightColor: '#FF231F7C',
-            });
-        }
-
-
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
-        if (existingStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-        }
-        if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
-            return;
-        }
-        token = (await Notifications.getExpoPushTokenAsync()).data;
-       
-
-        //save the token in users account
-        /*if (token) {
-            let res = await dispatch(addNotificationToken({ notificationToken: token }))
-            if (!res.bool) {
-                setIsError(true)
-            }
-
-        }*/
-
-
-        return token;
-    }
-
 
 
 
@@ -259,11 +226,7 @@ const Home = ({ navigation }) => {
     //use effect for watchlistCoin
     useEffect(() => {
         fetchWatchList()
-
     }, [])
-
-
-
 
     const parentErrorHandler = () => {
         if (isMounted) {
@@ -297,17 +260,27 @@ const Home = ({ navigation }) => {
 
                             <TouchableOpacity >
 
-                                <Text style={{ ...styles.giftText, color: 'black', fontFamily: "Poppins", fontSize: 17 }}>${Number(user.accountBalance).toFixed(2)}</Text>
+                                {user.isHideBalance ? <Text style={{ ...styles.giftText }}>
+
+
+
+                                </Text> : <Text style={{ ...styles.giftText }}>
+
+                                    ${Number(user.accountBalance).toFixed(2)}
+
+                                </Text>}
+
+
                             </TouchableOpacity>
 
 
 
 
                             <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
-                                <MaterialIcons name="notifications-none" size={30} color="black" />
+                                <Ionicons name="notifications" size={30} color="black" />
                                 <View style={styles.notification}>
                                     <View style={styles.notificationTextContainer}>
-                                        <Text style={styles.notificationText}>{isNotifications.length}</Text>
+                                        <Text style={styles.notificationText}>{user.notifications.length}</Text>
 
                                     </View>
 
@@ -364,19 +337,27 @@ const Home = ({ navigation }) => {
 
                         </TouchableOpacity>
 
-                        <TouchableOpacity  style={styles.giftContainer}>
-                            
-                            {user.accountBalance ? <Text style={styles.giftText}> ${Number(user.accountBalance).toFixed(2)}</Text> : <Text style={styles.giftText}> $1000</Text>}
+                        <TouchableOpacity style={styles.giftContainer}>
+
+                            {user.isHideBalance ? <Text style={{ ...styles.giftText }}>
+
+
+
+                            </Text> : <Text style={{ ...styles.giftText }}>
+
+                                ${Number(user.accountBalance).toFixed(2)}
+
+                            </Text>}
 
 
                         </TouchableOpacity>
 
 
                         <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
-                            <MaterialIcons name="notifications-none" size={30} color="black" />
+                            <Ionicons name="notifications" size={30} color="black" />
                             <View style={styles.notification}>
                                 <View style={styles.notificationTextContainer}>
-                                    <Text style={styles.notificationText}>{isNotifications.length}</Text>
+                                    <Text style={styles.notificationText}>{user.notifications.length}</Text>
 
                                 </View>
 
@@ -539,7 +520,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: 'Poppins',
         marginLeft: 10,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        color: 'black',
     }
     ,
     notification: {

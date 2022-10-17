@@ -1,7 +1,7 @@
 import React from "react"
-import ContentLoader, { Rect, Circle} from "react-content-loader/native"
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet,Dimensions} from 'react-native'
-import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import ContentLoader, { Rect} from "react-content-loader/native"
+import { View,SafeAreaView, ScrollView, TouchableOpacity, StyleSheet,Dimensions} from 'react-native'
+import { Entypo, MaterialIcons,Ionicons } from '@expo/vector-icons';
 
 
 let ContentLoaders = () => {
@@ -18,7 +18,7 @@ let ContentLoaders = () => {
 
 
                 <TouchableOpacity onPress={() => alert('notification')}>
-                    <MaterialIcons name="notifications-none" size={30} color="black" />
+                    <Ionicons name="notifications" size={30} color="black" />
                 </TouchableOpacity>
 
             </View>

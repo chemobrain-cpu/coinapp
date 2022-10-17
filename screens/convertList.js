@@ -27,7 +27,7 @@ let ConvertList = ({ navigation }) => {
         return navigation.navigate('ConvertToList', {
             fromName: coin.id,
             fromImage: coin.image,
-            fromPrice: coin.current_price,
+            fromPrice: coin.price,
             fromSymbol: coin.symbol
         })
 
@@ -75,10 +75,20 @@ let ConvertList = ({ navigation }) => {
             setIsLoading(false)
             return
         }
+        //filtering message response
+        let arr = []
+        for (let mem of response.message) {
+            for (let val of user.personalAssets) {
+                if (mem.id == val.id.toLowerCase()) {
+                    mem.price = mem.current_price
+                    mem.current_price = val.quantity * mem.current_price
+                    arr.push(mem)
+                }
+            }
+        }
 
-
-        setCoins((existingCoins) => [...existingCoins, ...response.message]);
-        setFilteredCoins((existingCoins) => [...response.message]);
+        setCoins((existingCoins) => [...existingCoins, ...arr]);
+        setFilteredCoins((existingCoins) => [...arr]);
         setIsLoading(false)
 
 

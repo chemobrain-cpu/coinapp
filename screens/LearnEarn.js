@@ -66,7 +66,7 @@ const LearnEarn = ({ navigation }) => {
                     {styles.card}>
                     <Image
                         source={require('../assets/icons/box.jpeg')}
-                        style={{ width: 100, height: 100, marginBottom: 35, marginLeft: 5 }} />
+                        style={{ width: 90, height: 90, marginBottom: 30, marginLeft: 5 }} />
 
                     <View style={styles.textContainer}>
                         <Text style={styles.headerText}>Invite friends</Text>
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'black',
-        fontSize: 17,
+        fontSize: 15,
         fontFamily: 'Poppins'
     },
     footerContainer: {

@@ -150,14 +150,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         width: '100%',
         borderRadius: 50,
-        paddingVertical: 16,
+        paddingVertical: 15,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgb(240,240,240)'
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 15,
         color: 'black',
         fontFamily: 'Poppins'
     },

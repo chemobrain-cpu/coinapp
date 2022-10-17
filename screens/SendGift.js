@@ -43,7 +43,7 @@ const SendInfo = ({ navigation }) => {
                 </View>
 
                 <View style={styles.headingCon}>
-                    <Text style={styles.headText}>Gift crypto to your friends and family</Text>
+                    <Text style={styles.headText}>Send crypto to your friends and family</Text>
                 </View>
 
                 <View style={styles.contentContainer}>
@@ -54,7 +54,7 @@ const SendInfo = ({ navigation }) => {
 
                     <View style={styles.content}>
                         <Text style={styles.contentHeader}>Select a recipient</Text>
-                        <Text style={styles.contentText}>You can send a crypto gift to anyone with an email address</Text>
+                        <Text style={styles.contentText}>You can send a crypto asset to anyone with an a wallet ID</Text>
                     </View>
                 </View>
 
@@ -64,8 +64,8 @@ const SendInfo = ({ navigation }) => {
                     </View>
 
                     <View style={styles.content}>
-                        <Text style={styles.contentHeader}>Choose a card design</Text>
-                        <Text style={styles.contentText}>We've partnered with up-and-coming artists for you to choose from</Text>
+                        <Text style={styles.contentHeader}>Convert crypto</Text>
+                        <Text style={styles.contentText}>Convert crypto to cash directly to your bank account</Text>
 
                     </View>
 
@@ -78,8 +78,8 @@ const SendInfo = ({ navigation }) => {
                     </View>
 
                     <View style={styles.content}>
-                        <Text style={styles.contentHeader}>Add a personal note</Text>
-                        <Text style={styles.contentText}>Write a friendly note to the person receiving the gift</Text>
+                        <Text style={styles.contentHeader}>Gift crypto</Text>
+                        <Text style={styles.contentText}>Gift crypto asset to anyone with an a wallet ID</Text>
 
                     </View>
 
@@ -89,7 +89,7 @@ const SendInfo = ({ navigation }) => {
             </ScrollView>
             <View style={styles.footerButtonCon}>
                 <TouchableOpacity style={styles.footerButton} onPress={navigateToAccount}>
-                    <Text style={styles.footerButtonText}>Send a gift</Text>
+                    <Text style={styles.footerButtonText}>Continue to send</Text>
 
                 </TouchableOpacity>
 
@@ -136,11 +136,13 @@ const styles = StyleSheet.create({
     contentContainer: {
         display: 'flex',
         flexDirection: 'row',
-        marginBottom: 35
+        marginBottom: 35,
+        paddingLeft:4
 
     },
     contentIcon: {
-        width: '10%'
+        width: '10%',
+        paddingTop:5
 
     },
     content: {
@@ -167,14 +169,14 @@ const styles = StyleSheet.create({
     footerButton:{
         width:'90%',
         backgroundColor:'#1652f0',
-        paddingVertical:15,
+        paddingVertical:17,
         borderRadius:50,
         display:'flex',
         alignItems:'center',
         justifyContent:'center'
     },
     footerButtonText:{
-        fontSize:17,
+        fontSize:15,
         color:'#fff',
         fontFamily: 'Poppins'
        

@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, Image} from 'react-native'
-import { Entypo, MaterialIcons} from '@expo/vector-icons';
+import { Entypo,Ionicons} from '@expo/vector-icons';
 import AssetsLoaders from '../loaders/assetsLoader'
 import {useSelector } from "react-redux";
 
 const Assets = ({navigation}) => {
     let [isLoading, setIsLoading] = useState(true)
-    let { user,notifications } = useSelector(state => state.userAuth)
-    let [isNotifications, setIsNotifications] = useState([])
+    let { user} = useSelector(state => state.userAuth)
+   
 
     useEffect(() => {
         setIsLoading(true)
-       
-
-        setIsNotifications(notifications)
         setTimeout(() => {
             setIsLoading(false)
         }, 1000)
@@ -53,10 +50,10 @@ const Assets = ({navigation}) => {
 
 
                         <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
-                            <MaterialIcons name="notifications-none" size={30} color="black" />
+                        <Ionicons name="notifications"  size={30} color="black" />
                             <View style={styles.notification}>
                                 <View style={styles.notificationTextContainer}>
-                                    <Text style={styles.notificationText}>{isNotifications.length}</Text>
+                                    <Text style={styles.notificationText}>{user.notifications.length}</Text>
 
                                 </View>
 
@@ -69,8 +66,11 @@ const Assets = ({navigation}) => {
                 </View>
 
                 <View style={styles.balanceContainer}>
-                    <Text style={styles.balanceText}>Your balance</Text>
-                    <Text style={styles.balanceAmount}>$ {Number(user.accountBalance).toFixed(2)}</Text>
+                    {user.isHideBalance?<Text style={styles.balanceText}></Text>:<Text style={styles.balanceText}>Your balance</Text>}
+
+                    {user.isHideBalance ?<Text style={styles.balanceAmount}></Text>:<Text style={styles.balanceAmount}>$ {Number(user.accountBalance).toFixed(2)}</Text>}
+
+
                 </View>
 
 
@@ -84,10 +84,10 @@ const Assets = ({navigation}) => {
 
                     <Text style={styles.starterHead}>Get started with crypto</Text>
 
-                    <Text style={styles.starterInfo}>Your crypto assets will appear here.</Text>
+                    <Text style={styles.starterInfo}>Purchase crypto to earn.</Text>
 
                     <TouchableOpacity style={styles.buttonContainer} onPress={navigateToAsset}>
-                        <Text style={styles.buttonText}>Explore assets</Text>
+                        <Text style={styles.buttonText}>Your assets</Text>
 
                     </TouchableOpacity>
                 </View>
@@ -115,7 +115,7 @@ const Assets = ({navigation}) => {
                     </View>
 
                     <TouchableOpacity style={styles.buttonContainer} onPress={buyAssetHandler}>
-                        <Text style={styles.buttonText}>Add new</Text>
+                        <Text style={styles.buttonText}>Buy assets</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
 
     },
     buttonContainer: {
-        paddingVertical: 18,
+        paddingVertical: 15,
         borderRadius: 30,
         backgroundColor: 'rgb(240,240,240)',
         width: '95%',
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
 
     },
     buttonText: {
-        fontSize: 17,
+        fontSize: 15,
         fontFamily: 'Poppins'
 
     },

@@ -16,7 +16,7 @@ const SettingModal = ({modalVisible,updateVisibility,navigateHandler}) => {
                 <View style={styles.modalView}>
                     <Text style={styles.modalQuest}> Change Information</Text>
 
-                    <Text style={styles.modalState}>To change your info,please follow this steps listed on this support page</Text>
+                    <Text style={styles.modalState}>To change your info,tap the button below to proceed.</Text>
 
                     <Pressable style={styles.button} onPress={updateVisibility}>
                         <Text style={styles.buttonText}>Continue</Text>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         width: '20%',
         backgroundColor: 'rgb(225,225,225)',
         position: 'absolute',
-        top: '64%',
+        top: '65%',
         alignSelf: 'center',
         borderRadius: 5
     },
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: '#fff',
         width: Dimensions.get('window').width,
-        top: '67%',
+        top: '69%',
         height: '35%',
         display: 'flex',
         flexDirection: 'column',
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     button:{
         width: '100%',
         borderRadius: 50,
-        paddingVertical:14,
+        paddingVertical:17,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
 
     },
     buttonText:{
-        fontSize: 18,
+        fontSize: 15,
         fontFamily: 'Poppins',
 
     }

@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff'
     },
     footerButton:{
-        paddingVertical:15,
+        paddingVertical:17,
         borderRadius:30,
         backgroundColor:'#1652f0',
         width:'100%',

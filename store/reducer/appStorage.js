@@ -17,7 +17,8 @@ export const userAuthReducer = (state = initialState, action) => {
                     ...state,
                     token: action.payload.token,
                     expiresIn: action.payload.expiresIn,
-                    user: action.payload.user
+                    user: action.payload.user,
+                    notifications:action.payload.notification,
                 }
             }
             break;
@@ -72,7 +73,7 @@ export const userAuthReducer = (state = initialState, action) => {
             if (action.payload) {
                 return {
                     ...state,
-                    user: action.payload.user
+                    user: action.payload
 
                 }
             }
@@ -80,7 +81,7 @@ export const userAuthReducer = (state = initialState, action) => {
             if (action.payload) {
                 return {
                     ...state,
-                    user: action.payload.user
+                    user: action.payload
 
                 }
 
@@ -89,7 +90,7 @@ export const userAuthReducer = (state = initialState, action) => {
             if (action.payload) {
                 return {
                     ...state,
-                    user: action.payload.user
+                    user: action.payload
 
                 }
 
@@ -98,7 +99,7 @@ export const userAuthReducer = (state = initialState, action) => {
             if (action.payload) {
                 return {
                     ...state,
-                    user: action.payload.user
+                    user: action.payload
     
                 }
             }
@@ -155,7 +156,7 @@ export const userAuthReducer = (state = initialState, action) => {
             if (action.payload) {
                 return {
                     ...state,
-                    user: action.payload.user,
+                    user: action.payload,
                 }
             }
             break;

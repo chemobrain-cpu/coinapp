@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
     },
     footerButtonText: {
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins',
         color: '#fff',
         marginRight: 10

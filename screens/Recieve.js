@@ -122,7 +122,7 @@ const RecieveCrypto = ({ navigation }) => {
 
                 <View style={styles.qraddress}>
                     <View style={styles.address}>
-                        <Text style={styles.coinTitle}>BTC address</Text>
+                        <Text style={styles.coinTitle}>{user.currentWallet.symbol} address</Text>
                         <Text style={styles.coinAddress}> {truncate(user.currentWallet.address, 5)}</Text>
 
                     </View>
@@ -142,7 +142,7 @@ const RecieveCrypto = ({ navigation }) => {
 
                 </View>
 
-                <Text style={styles.warningInfo}>Only send Bitcoin(BTC) to this address</Text>
+                <Text style={styles.warningInfo}>Only send {truncate(user.currentWallet.id,6)} ({user.currentWallet.symbol}) to this address</Text>
             </View>
 
         </ScrollView>

@@ -183,6 +183,7 @@ const Calculator = ({ navigation }) => {
                 data.decrement = Number(value) * conversionRate
                 data.quantity = Number(value)
             }
+            setIsLoading(true)
             let res = await dispatch(buyCrypto(data))
 
             if (!res.bool) {
@@ -190,12 +191,14 @@ const Calculator = ({ navigation }) => {
                 setUserStatus('error')
                 setModalTopic("Try again later")
                 setModalText("An error occured on the server")
+                setIsLoading(false)
 
             }
             setModalVisible(true)
             setUserStatus('bought')
             setModalTopic("sucessful")
             setModalText("you have sucessfully purchase the asset")
+            setIsLoading(false)
 
 
         } else if (action == 'sell') {
@@ -233,7 +236,6 @@ const Calculator = ({ navigation }) => {
 
             }else{
                 //i should not sell more than what i have
-                
 
                 if ((Number(value)) > Number(cryptoQuantity)) {
                     setModalVisible(true)
@@ -261,6 +263,7 @@ const Calculator = ({ navigation }) => {
                 data.price = Number(value) * conversionRate
                 data.quantity = Number(value)
             }
+            setIsLoading(true)
            
             let res = await dispatch(sellCrypto(data))
 
@@ -269,12 +272,14 @@ const Calculator = ({ navigation }) => {
                 setUserStatus('error')
                 setModalTopic("Try again later")
                 setModalText("An error occured on the server")
+                setIsLoading(false)
 
             }
             setModalVisible(true)
             setUserStatus('sell')
-            setModalTopic("sucessful")
-            setModalText("you have sucessfully sold the asset")
+            setModalTopic("Successful sale")
+            setModalText("you have successfully sold the asset.continue to view assets in this account")
+            setIsLoading(false)
 
 
         }else if (action == "send") {
@@ -371,8 +376,6 @@ const Calculator = ({ navigation }) => {
         setConversionRate(price)
         setIsLoading(false)
     }, []);
-
-   
 
 
     let dollarPriceUi = (data) => {
@@ -760,14 +763,14 @@ const styles = StyleSheet.create({
     button: {
         width: '95%',
         backgroundColor: '#1652f0',
-        paddingVertical: 16,
+        paddingVertical: 15,
         borderRadius: 30,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 15,
         fontFamily: "ABeeZee",
         color: '#fff',
 

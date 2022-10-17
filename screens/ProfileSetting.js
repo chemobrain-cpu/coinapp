@@ -1,26 +1,28 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, Text, SafeAreaView, ScrollView, Pressable, StyleSheet, Image, Switch } from 'react-native'
 import { Feather, AntDesign } from '@expo/vector-icons';
 import { Card } from "react-native-shadow-cards"
-import { useDispatch,useSelector  } from "react-redux";
-import { logout } from "../store/action/appStorage";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, offPinSwitch, onPinSwitch, toggleBalance } from "../store/action/appStorage";
 import SettingModal from '../modals/profileSettingModal';
 import * as WebBrowser from 'expo-web-browser';
-import {truncate} from "../utils/util"
+import { truncate } from "../utils/util"
+import AuthModal from '../modals/authModal'
+import Loader from '../loaders/Loader';
 
 const ProfileSetting = ({ navigation }) => {
-    useEffect(()=>{
 
-    },[])
-
-    
     const [header, setHeader] = useState(false);
     let { user } = useSelector(state => state.userAuth)
     let dispatch = useDispatch()
     const [modalVisible, setModalVisible] = useState(false)
+    const [isAuthError, setIsAuthError] = useState(false)
+    const [authInfo, setAuthInfo] = useState("")
+    const [url, setUrl] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
+    const [isHideLoading, setIsHideLoading] = useState(false)
 
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+
 
     const scrollHandler = (e) => {
         if (e.nativeEvent.contentOffset.y > 5) {
@@ -30,7 +32,6 @@ const ProfileSetting = ({ navigation }) => {
 
         }
     }
-   
 
     const signoutHandler = async () => {
         dispatch(logout())
@@ -68,25 +69,145 @@ const ProfileSetting = ({ navigation }) => {
 
     }
 
-    const supportHandler = async() => {
+    const supportHandler = async () => {
         //navigating to the browser
-         //navigate to password reset page
-         await WebBrowser.openBrowserAsync('http://192.168.42.227:8080')
+        //navigate to password reset page
+        await WebBrowser.openBrowserAsync('http://192.168.42.227:8080')
 
 
     }
 
+    const requirePinHandler = async () => {
+        if (isLoading) {
+            return
+        }
+        //check if user pin is enabled to true
+        if (user.isRequiredPin) {
+            setIsLoading(true)
+            let res = await dispatch(offPinSwitch())
+            if (!res.bool) {
+
+                setAuthInfo(res.message)
+                setUrl('ProfileSetting')
+                setIsAuthError(true)
+                setIsLoading(false)
+                return
+
+            }
+            //it has been turn off
+            setAuthInfo('security pin has been disabled')
+            setUrl('ProfileSetting')
+            setIsAuthError(true)
+            setIsLoading(false)
+            return
+
+
+        }
+        //does user have the pin?
+        if (!user.pin) {
+            setAuthInfo('Secure your assets with a unique 4 digit pin. Tap to continue')
+            setUrl('Pin')
+            setIsAuthError(true)
+            return
+
+        }
+
+        //finally , send request to server to turn user.isRequiredPin to on
+        setIsLoading(true)
+        let res = await dispatch(onPinSwitch())
+        if (!res.bool) {
+            setAuthInfo(res.message)
+            setUrl('ProfileSetting')
+            setIsAuthError(true)
+            setIsLoading(false)
+            return
+
+        }
+        //it has been turn off
+        setAuthInfo("Security pin has been enabled for this account")
+        setUrl('ProfileSetting')
+        setIsAuthError(true)
+        setIsLoading(false)
+
+    }
+
+    const pinSettingHandler = () => {
+        navigation.navigate('PinSetting')
+    }
+
+    const hideHandler = async () => {
+
+        if (isHideLoading) {
+            return;
+        }
+        if (user.isHideBalance) {
+            //turn it to off
+            setIsHideLoading(true)
+            let res = await  dispatch(toggleBalance({ bool: false }))
+            if (!res.bool) {
+                setIsHideLoading(true)
+                setAuthInfo(res.message)
+
+                setUrl('ProfileSetting')
+
+                setIsAuthError(true)
+                setIsHideLoading(false)
+                return
+
+            }
+            setAuthInfo('Account balance for this device is not visible')
+
+            setUrl('ProfileSetting')
+
+            setIsAuthError(true)
+            setIsHideLoading(false)
+
+            return
+        }
+        setIsHideLoading(true)
+        let res = await dispatch(toggleBalance({bool:true}))
+        //turn it to on
+        if (!res.bool) {
+            setIsHideLoading(true)
+            setAuthInfo(res.message)
+
+            setUrl('ProfileSetting')
+
+            setIsAuthError(true)
+            setIsHideLoading(false)
+            return
+
+        }
+        
+        setAuthInfo('Account balance for this device is visible')
+        setUrl('ProfileSetting')
+        setIsAuthError(true)
+        setIsHideLoading(false)
+
+        return
 
 
 
+    }
 
+    const updateAuthError = () => {
+        setIsAuthError(prev => !prev)
+        return navigation.navigate(url)
+    }
+
+     if (isLoading || isHideLoading) {
+        return <Loader />
+    }
 
 
     return (<>
+        {isAuthError && <AuthModal modalVisible={isAuthError} updateVisibility={updateAuthError} message={authInfo} />}
+
         <SettingModal modalVisible={modalVisible}
             updateVisibility={updateVisibility} navigateHandler={navigateHandler} />
+
         <SafeAreaView style={styles.screen}>
-            <View style={{ ...styles.navigationHeader, position: header ? "absolute" : 'static', top: header ? 0 : 0, borderBottomWidth: header ? .5 : 0, borderBottomColor:'rgb(200,200,200)' }}>
+            <View style={{ ...styles.navigationHeader, position: header ? "absolute" : 'static', top: header ? 0 : 0, borderBottomWidth: header ? .5 : 0, borderBottomColor: 'rgb(200,200,200)' }}>
                 <Pressable onPress={() => navigation.goBack()} >
                     <Feather name="arrow-left" size={24} color="rgb(44, 44, 44)" />
                 </Pressable>
@@ -160,9 +281,9 @@ const ProfileSetting = ({ navigation }) => {
 
 
 
-                <Text style={styles.paymentText}>General</Text>
+                <Text style={styles.paymentText}>Display</Text>
 
-                <Pressable style={styles.settingContainer}>
+                <Pressable style={styles.settingContainer} >
                     <View>
                         <Text style={styles.settingText}>Appearance</Text>
                     </View>
@@ -170,8 +291,49 @@ const ProfileSetting = ({ navigation }) => {
 
                 </Pressable>
 
+                <Pressable style={styles.switchContainer} onPress={hideHandler}>
+                    <View>
+                        <Text style={styles.settingText}>Hide balance</Text>
+                    </View>
+
+                    <Switch
+                        trackColor={{ false: "grey", true: "grey" }}
+                        thumbColor={"#fff"}
+
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={hideHandler}
+                        value={user.isHideBalance}
+                        style={{ transform: [{ scaleX: 1.7 }, { scaleY: 1.7 }] }}
+
+                    />
 
 
+                </Pressable>
+                <Text style={styles.paymentText}>Display</Text>
+
+                <Pressable style={styles.switchContainer} onPress={requirePinHandler}>
+                    <View>
+                        <Text style={styles.settingText}>Require pin</Text>
+                    </View>
+
+                    <Switch
+                        trackColor={{ false: "grey", true: "grey" }}
+                        thumbColor={"#fff"}
+                        onValueChange={requirePinHandler}
+                        value={user.isRequiredPin}
+                        style={{ transform: [{ scaleX: 1.7 }, { scaleY: 1.7 }] }}
+
+                    />
+
+                </Pressable>
+
+                <Pressable style={styles.settingContainer} onPress={pinSettingHandler}>
+                    <View>
+                        <Text style={styles.settingText}>Pin settings</Text>
+                    </View>
+                    <AntDesign name="right" size={18} color="rgb(44, 44, 44)" />
+
+                </Pressable>
 
 
 
@@ -298,18 +460,17 @@ const styles = StyleSheet.create({
         marginBottom: 50
 
     },
-    settingText: {
-        fontSize: 17,
-        fontFamily: 'ABeeZee'
-    },
     switchContainer: {
         display: 'flex',
         flexDirection: 'row',
-        marginBottom: 50,
-        alignItems: 'center',
         justifyContent: 'space-between',
+        marginBottom: 50,
         paddingRight: 10
 
+    },
+    settingText: {
+        fontSize: 17,
+        fontFamily: 'ABeeZee'
     },
 
 

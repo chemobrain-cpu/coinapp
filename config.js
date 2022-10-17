@@ -18,7 +18,7 @@ import LearnEarn from "./screens/LearnEarn";
 import InviteFriend from "./screens/InviteFriend"
 import Earn from "./screens/Earnyield"
 import EarnAsset from "./screens/EarnOption"
-import WalletAsset from "./screens/addressFromList"
+import WalletAsset from "./screens/AddressFromList"
 import RecieveCrypto from "./screens/Recieve"
 import SendInfo from "./screens/SendGift"
 import Calculator from './screens/CryptoCalculator'
@@ -34,8 +34,8 @@ import BuyCryptoList from "./screens/BuyCryptoList";
 import SellList from "./screens/SellList";
 import IdVerification from "./screens/imageVerification"
 import SendList from "./screens/SendList"
-import ConvertList from "./screens/convertList"
-import Camera from "./screens/camera"
+import ConvertList from "./screens/ConvertList"
+import Camera from "./screens/Camera"
 import Notification from "./screens/Notification"
 import TopUp from "./screens/topUp"
 import CryptoForm from "./screens/CryptoForm";
@@ -46,7 +46,7 @@ import Tnt from "./screens/Tnt";
 import Ktc from "./screens/Ktc";
 import Ust from "./screens/Ust";
 import ConvertTo from "./screens/convertToList";
-import ConvertCalculator from "./screens/convertCalculator";
+import ConvertCalculator from "./screens/ConvertCalculator";
 import LinkToCard from "./screens/linktoCard";
 import LimitAndFeatures from "./screens/LimitAndFeature";
 import Privacy from "./screens/Privacy";
@@ -54,6 +54,13 @@ import PhoneSetting from "./screens/PhoneSetting";
 import NewPhone from "./screens/NewPhoneForm";
 import ConfirmNewPhone from "./screens/ConfirmNewPhone";
 import UserCard from "./screens/updateUser";
+import Pin from "./screens/Pin";
+import ConfirmPin from "./screens/ConfirmPin";
+import CryptoPin from "./screens/CryptoPin";
+import PinSetting from "./screens/PinSetting";
+import Password from "./screens/Password";
+import Authorize from "./screens/Authorize";
+
 //auth screen
 import Splash_1 from "./auth/splash";
 import Splash_2 from "./auth/splash2";
@@ -67,6 +74,9 @@ import VerifyNumber from "./auth/verifyNumber";
 import Authenticate from "./auth/authenticate";
 import VerifySuccess from "./auth/verifySuccess";
 import SearchSplash from "./auth/searchSplash";
+
+
+
 //importing component
 import CustomDrawerContent from "./component/DrawerContent";
 const Tab = createBottomTabNavigator();
@@ -171,7 +181,7 @@ const DrawerNavigator = () => {
 
 const HomeStackNavigator = () => {
 
-    let { user, token } = useSelector(state => state.userAuth)
+    let { token } = useSelector(state => state.userAuth)
     if (!token) {
         return <Stack.Navigator initialRouteName="Splash_1">
             <Stack.Screen
@@ -345,7 +355,11 @@ const HomeStackNavigator = () => {
                 options={{ headerShown: false }}
             />
 
-
+            <Stack.Screen
+                name="PinSetting"
+                component={PinSetting}
+                options={{ headerShown: false }}
+            />
 
             <Stack.Screen
                 name="LearnEarn"
@@ -482,6 +496,32 @@ const HomeStackNavigator = () => {
             <Stack.Screen
                 name="Notification"
                 component={Notification}
+                options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+                name="Pin"
+                component={Pin}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Password"
+                component={Password}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="ConfirmPin"
+                component={ConfirmPin}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="CryptoPin"
+                component={CryptoPin}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Authorize"
+                component={Authorize}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

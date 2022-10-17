@@ -64,7 +64,6 @@ const Card = ({ navigation }) => {
     },[])
 
 
-
     const updateAuthError = () => {
         setIsAuthError(prev => !prev)
     }
@@ -105,12 +104,6 @@ const Card = ({ navigation }) => {
 
     }
 
-
-
-
-
-
-
     const scrollHandler = (e) => {
         if (e.nativeEvent.contentOffset.y > 5) {
             setHeader(true)
@@ -118,7 +111,6 @@ const Card = ({ navigation }) => {
             setHeader(false)
         }
     }
-
 
     let changeCardName = (e) => {
         setCardName(e)
@@ -474,7 +466,7 @@ const styles = StyleSheet.create({
     },
     buttonCon: {
         width: '100%',
-        height: 60,
+        paddingVertical:17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         display: 'flex',
@@ -483,7 +475,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     button: {
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins',
         color: '#fff'
     },

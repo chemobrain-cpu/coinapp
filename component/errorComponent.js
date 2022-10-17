@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
 
     },
     statusText: {
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins'
     }
 

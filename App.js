@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 //import {Navig} from '@react-navigation/native'
 import { View, Text, StyleSheet, Dimensions, SafeAreaView } from 'react-native'
-
 import * as Font from 'expo-font';
 //redux config
 //configuring redux store
@@ -18,8 +17,10 @@ import Screen from "./config";
 
 
 
+
 export default function App() {
   const [isLoading, setIsLoading] = useState(true)
+
   //redux store setup
   const rootReducer = combineReducers({
     userAuth: userAuthReducer,
@@ -41,8 +42,9 @@ export default function App() {
 
   useEffect(() => {
     loadFonts()
-
   }, [loadFonts])
+
+ 
 
   if (isLoading) {
 
@@ -52,11 +54,11 @@ export default function App() {
       </View></View>)
   }
   return (
-      <Provider store={store}>
+    <Provider store={store}>
 
-        <Screen />
+      <Screen />
 
-      </Provider >
+    </Provider >
 
   );
 }

@@ -26,7 +26,7 @@ let SendList = ({ navigation }) => {
         //here were navigating to send calculator
         return navigation.navigate('CryptoCalculator', {
             id: coin.id,
-            price: coin.current_price,
+            price: coin.price,
             name: coin.name,
             image: coin.image,
             action: 'send'
@@ -64,13 +64,14 @@ let SendList = ({ navigation }) => {
             setIsLoading(false)
             return
         }
-        setIsLoading(false)
         //filtering message response
         let arr = []
         for (let mem of response.message) {
             for (let val of user.personalAssets) {
                 if (mem.id == val.id.toLowerCase()) {
+                    mem.price = mem.current_price
                     mem.current_price = val.quantity * mem.current_price
+                     
                     arr.push(mem)
                 }
             }

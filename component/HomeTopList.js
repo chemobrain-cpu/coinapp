@@ -23,7 +23,7 @@ const HomeTopList = ({navigationHandler,coins}) => {
 };
 let styles = StyleSheet.create({
   scrollContainer: {
-    paddingTop: 0
+    paddingTop: 0,
   },
 
 

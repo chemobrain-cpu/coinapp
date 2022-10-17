@@ -14,21 +14,18 @@ let Splash = ({ navigation }) => {
     useEffect(() => {
         async function fetchData() {
             // You can await here
-            try {
-                let response = await dispatch(checkIfIsLoggedIn())
+            let response = await dispatch(checkIfIsLoggedIn())
+
                 if (!response.bool) {
                     return navigation.navigate('Splash_2')
                 }
-            } catch (err) {
-                return navigation.navigate('Splash_2')
-
-            }
         }
+
         fetchData()
+
     }, [dispatch, checkIfIsLoggedIn, navigation, loadCoins])
     //on this screen loads,check the sync storage for 
    
-
 
     return (
         <SafeAreaView style={styles.screen}>

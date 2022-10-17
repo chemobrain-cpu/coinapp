@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React,{useEffect,useState} from 'react'
 import { View, Text, SafeAreaView, StyleSheet, Pressable } from 'react-native'
-import { MaterialIcons, Feather } from '@expo/vector-icons';
-import { hashFun } from "../utils/util"
-import { useSelector } from "react-redux";
+import {Feather } from '@expo/vector-icons';
 import Loader from '../loaders/Loader';
 
-const PhoneSetting = ({ navigation }) => {
-    let { user } = useSelector(state => state.userAuth)
+
+
+const PinSetting = ({ navigation }) => {
     let [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => {
-        setTimeout(() => {
+    useEffect(()=>{
+        setTimeout(()=>{
             setIsLoading(false)
-        }, 2000)
+        },2000)
     })
-
-    const changePhoneHandler = async () => {
+    
+    const changePinHandler = async () => {
         //navigating to the browser
-        navigation.navigate('NewPhone')
+        navigation.navigate('Password')
     }
 
-    if (isLoading) {
-        return <Loader />
+    if(isLoading){
+        return <Loader/>
     }
 
     return (<SafeAreaView style={styles.screen}>
@@ -30,7 +29,7 @@ const PhoneSetting = ({ navigation }) => {
 
             <Pressable onPress={() => navigation.goBack()} style={{ ...styles.goback }} >
                 <Feather name="arrow-left" size={23} color="rgb(44, 44, 44)" />
-                <Text style={styles.headerName}>Phone numbers</Text>
+                <Text style={styles.headerName}>Security pin</Text>
             </Pressable>
 
 
@@ -38,19 +37,17 @@ const PhoneSetting = ({ navigation }) => {
 
         <View style={styles.phoneContainer}>
             <View style={styles.phoneIcon}>
-                <MaterialIcons name="phone-android" size={24} color="black" />
-
+                <Feather name="unlock" size={24} color="black" />
             </View>
 
             <Text style={styles.phoneNumber}>
-                {hashFun(user.number)}
-
+                ****
             </Text>
 
         </View>
 
-        <Pressable style={styles.changePhone} onPress={changePhoneHandler}>
-            <Text style={styles.changePhoneText}>Change phone number</Text>
+        <Pressable style={styles.changePhone} onPress={changePinHandler}>
+            <Text style={styles.changePhoneText}>Change security pin</Text>
         </Pressable>
 
     </SafeAreaView>
@@ -96,19 +93,19 @@ const styles = StyleSheet.create({
 
 
     },
-    phoneContainer: {
+    phoneContainer:{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 15
+        marginBottom:15
 
     },
-    phoneNumber: {
-        fontSize: 20,
-        marginLeft: 12
+    phoneNumber:{
+        fontSize:25,
+        marginLeft:12
     },
 
-    changePhone: {
+    changePhone:{
         width: '90%',
         paddingVertical: 18,
         backgroundColor: 'rgb(240,240,240)',
@@ -123,7 +120,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
 
     },
-    changePhoneText: {
+    changePhoneText:{
         fontSize: 15,
         fontFamily: 'Poppins',
 
@@ -139,4 +136,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default PhoneSetting
+export default PinSetting

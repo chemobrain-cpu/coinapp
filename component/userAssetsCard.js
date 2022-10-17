@@ -8,7 +8,9 @@ let UserAssetCard = ({ navigationHandler, coin,user }) => {
    
     //destructuring the coin datastructure
     
-    let { image, name, id, symbol } = coin
+    let { image, name, id, symbol,current_price } = coin
+
+    
     
    
     return <TouchableOpacity 
@@ -30,8 +32,8 @@ let UserAssetCard = ({ navigationHandler, coin,user }) => {
         <View style={styles.containerRight}>
             <View style={styles.innerContainerRight}>
                
-                {user.currentWallet.id === id.toLowerCase()?<Text style={styles.priceText}>${user.currentWallet.amount}</Text>:<Text style={styles.priceText}>$0.00</Text>}
-                <Text style={{ ...styles.iconText, color: 'rgb(100,100,100)' }}>0 {symbol.toUpperCase()}</Text>
+                {user.currentWallet.id === id.toLowerCase()?<Text style={styles.priceText}>$0.00</Text>:<Text style={styles.priceText}>$0.00</Text>}
+                <Text style={{ ...styles.iconText, color: 'rgb(100,100,100)' }}>{symbol.toUpperCase()}</Text>
 
             </View>
 

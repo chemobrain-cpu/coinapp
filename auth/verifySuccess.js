@@ -1,16 +1,92 @@
-import React from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ScrollView, Dimensions,} from 'react-native'
+import React, { useEffect } from 'react'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, ScrollView, Dimensions, } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-import {goToHome  } from "../store/action/appStorage";
-import { useDispatch} from "react-redux";
+import { goToHome } from "../store/action/appStorage";
+import { useDispatch } from "react-redux";
+import * as Notifications from 'expo-notifications';
+//push notification
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+    }),
+});
 
 
 const VerifySuccess = ({ navigation }) => {
     let dispatch = useDispatch()
+    const [expoPushToken, setExpoPushToken] = useState([]);
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
 
-    const continueHandler = async()=>{
+
+    useEffect(() => {
+        registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+        Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        })
+
+        Notifications.addNotificationResponseReceivedListener(async(response) => {
+            await dispatch(goToHome())
+        })
+
+        async function schedulePushNotification() {
+            await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: "Welcome! 📬",
+                    body: 'welcome to coinbase.fund your account and start trading  any crypto assets of your choice',
+                    data: { data: 'goes here' },
+                },
+                trigger: { seconds: 2 },
+            });
+        }
+
+        schedulePushNotification()
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        }
+
+    }, [])
+
+    const registerForPushNotificationsAsync = async () => {
+        let token;
+
+        if (Platform.OS === 'android') {
+            await Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+
+
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+            const { status } = await Notifications.requestPermissionsAsync();
+            finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notification!');
+            return;
+        }
+        token = (await Notifications.getExpoPushTokenAsync()).data;
+        //save the token in users account
+
+
+        console.log(token)
+        return token;
+    }
+
+
+    const continueHandler = async () => {
         await dispatch(goToHome())
-        navigation.navigate('Home')
     }
 
     return (<SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
@@ -50,9 +126,6 @@ const VerifySuccess = ({ navigation }) => {
 
     </SafeAreaView>
     )
-
-
-
 
 }
 
@@ -124,7 +197,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 15,
         fontFamily: 'Poppins',
     }
 
