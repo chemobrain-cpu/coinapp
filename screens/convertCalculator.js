@@ -29,7 +29,7 @@ const ConvertCalculator = ({ navigation }) => {
     const [modalTopic, setModalTopic] = useState('');
     const [modalText, setModalText] = useState("")
     const [userStatus, setUserStatus] = useState("")
-    const [cryptoQuantity, setCryptoQuantity] = useState("")
+    const [cryptoQuantity, setCryptoQuantity] = useState(0)
 
     const dispatch = useDispatch()
     let { user } = useSelector(state => state.userAuth)
@@ -57,7 +57,7 @@ const ConvertCalculator = ({ navigation }) => {
         console.log(assets)
         if (assets.length > 0) {
             setUserAsset(assets[0])
-            let cryptoQuantity = assets[0].quantity.toFixed(3)
+            let cryptoQuantity = assets[0].quantity.toFixed(5)
             setCryptoQuantity(cryptoQuantity)
         }
         let rate = fromPrice / toPrice
@@ -96,12 +96,12 @@ const ConvertCalculator = ({ navigation }) => {
             setModalVisible(false)
             
             //i should be able to navigate to my asset
-            return navigation.navigate("SellList")
+            return navigation.navigate("Assets")
         }
         else if (userStatus == "sell") {
             setModalVisible(false)
             //i should be able to navigate to my asset
-            return navigation.navigate("SellList")
+            return navigation.navigate("Assets")
         }
     }
 
@@ -111,7 +111,7 @@ const ConvertCalculator = ({ navigation }) => {
     //button function
     let button = (num) => {
         setValue(prev => {
-            if (prev.length > 10) {
+            if (prev.length > 5) {
                 return prev
             }
             return prev + num
@@ -188,15 +188,28 @@ const ConvertCalculator = ({ navigation }) => {
             setModalText(`Your available asset balance is not enough.topup and buy ${fromSymbol} !!`)
             return
         }
+        //check if account is secure before proceeding
+
+        
 
         //hence proceexd to buy
         let data = {
             fromName,
             toName,
             fromQuantity:Number(value),
-            toQuantity:(conversionRate.toFixed(3) * value)
+            toQuantity:(conversionRate * value)
 
         }
+
+        if(user.isRequiredPin){
+            setIsLoading(false)
+            return navigation.navigate('Authorize',
+            {
+               data:data,
+               action:'convert' 
+            })
+        }
+
         let res = await dispatch(convertCrypto(data))
 
         if (!res.bool) {
@@ -208,11 +221,12 @@ const ConvertCalculator = ({ navigation }) => {
             return
 
         }
+        
         setIsLoading(false)
         setModalVisible(true)
         setUserStatus('converted')
         setModalTopic("sucessful")
-        setModalText(`you have sucessfully converted ${Number(value)} of ${fromName} to ${(conversionRate.toFixed(3) * value)} of ${toName}`)
+        setModalText(`you have sucessfully converted ${Number(value)} of ${fromName} to ${(conversionRate * value)} of ${toName}`)
 
     }
 
@@ -261,8 +275,8 @@ const ConvertCalculator = ({ navigation }) => {
 
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
             <ScrollView contentContainerStyle={styles.scrollContainer} stickyHeaderIndices={[0]}>
-                <View style={{ display: 'flex', width: '100%' }}>
-                    <View style={{ ...styles.headerContainer, }}>
+                <View style={styles.headerOuterCon}>
+                    <View style={styles.headerContainer}>
                         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerContainerIcon} >
                             <AntDesign name="close" size={23} />
                         </TouchableOpacity>
@@ -299,7 +313,7 @@ const ConvertCalculator = ({ navigation }) => {
 
 
 
-                <View style={styles.calculatorCon}>
+                <View >
                     <View style={styles.numberContainer}>
                         <TouchableOpacity style={styles.numberButton} onPress={() => button('1')}>
                             <Text style={styles.number}>1</Text>
@@ -381,6 +395,10 @@ const styles = StyleSheet.create({
     scrollContainer: {
         width: Dimensions.get('window').width,
         paddingHorizontal: 15,
+    },
+    headerOuterCon:{ 
+        display: 'flex', 
+        width: '100%' 
     },
     headerContainer: {
         paddingTop: 40,
@@ -468,7 +486,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     numberButton: {
-        width: 30,
+        width: 40,
         height: 60,
         display: 'flex',
         alignItems: 'center',
@@ -476,8 +494,8 @@ const styles = StyleSheet.create({
 
     },
     number: {
-        fontSize: 28,
-        fontFamily: 'Poppins'
+        fontSize: 30,
+        fontFamily: 'ABeeZee'
     },
 
 
@@ -486,19 +504,19 @@ const styles = StyleSheet.create({
         height: 100,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     button: {
-        width: '95%',
+        width: '100%',
         backgroundColor: '#1652f0',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },
     buttonText: {
-        fontSize: 15,
+        fontSize: 18,
         fontFamily: "ABeeZee",
         color: '#fff',
 

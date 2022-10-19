@@ -13,17 +13,9 @@ const InviteFriend = ({ navigation }) => {
     let [copyActionStyle,setCopyActionStyle] = useState('')
     let [isLoading, setIsLoading] = useState(true)
     //the user link will be gotten from redux
-    const [link, setLink] = useState('coinbas...rierhi_c')
+    const [link, setLink] = useState('')
     let { user } = useSelector(state => state.userAuth)
     useEffect(()=>{
-        /*
-        let url = truncate('coinbaseether.com',6)
-        let username = truncate(user.lastName,5)
-        let fullUrl = `${url}${username}`
-        */
-
-
-
         let url = 'coinbaseether.com'
         let username = user.lastName
         let fullUrl = `${url}/${username}`

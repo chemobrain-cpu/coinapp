@@ -8,7 +8,7 @@ const MyLoader = (props) => (
         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false} onScroll={scrollHandler} stickyHeaderIndices={[0]}>
             <View >
                 <View style={{ ...styles.headerContainer }}>
-                    <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                    <TouchableOpacity >
                         <Entypo name="menu" size={24} color="black" />
                     </TouchableOpacity>
 

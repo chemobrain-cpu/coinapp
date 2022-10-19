@@ -18,7 +18,7 @@ export const LOGOUT = "LOGOUT"
 export const UPDATEUSER = "UPDATEUSER"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ErrorModal from '../../modals/errorModal';
-export let socket = IO(`http://192.168.42.108:8080/`)
+export let socket = IO(`http://192.168.42.176:8080/`)
 import { RNS3 } from "react-native-aws3"
 let timer
 
@@ -82,7 +82,7 @@ export const checkIfIsLoggedIn = () => {
           message: 'no stored user'
         }
       }
-      response = await fetch(`http://192.168.42.108:8080/auth/userbytoken`, {
+      response = await fetch(`http://192.168.42.176:8080/auth/userbytoken`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -133,7 +133,7 @@ export const checkIfIsLoggedIn = () => {
 export const signup = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/emailsignup`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/emailsignup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -176,7 +176,7 @@ export const login = (data) => {
   return async (dispatch, getState) => {
     try {
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/login`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -253,7 +253,7 @@ export const login = (data) => {
 export const verifiedEmail = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/confirmuserverification`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/confirmuserverification`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -293,7 +293,7 @@ export const verifiedEmail = (data) => {
 export const phoneNumber = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/phone`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/phone`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -341,7 +341,7 @@ export const changePhone = (data) => {
   return async (dispatch, getState) => {
     let { token } = getState().userAuth
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/changephone`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/changephone`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -391,7 +391,7 @@ export const confirm = (data) => {
     let { token } = getState().userAuth
    
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/confirmnewphone`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/confirmnewphone`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -447,7 +447,7 @@ export const confirm = (data) => {
 export const confirmPhone = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/confirmphone`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/confirmphone`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -649,7 +649,7 @@ export const changeWalletAsset = (data) => {
 
 
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/changewalletaddress`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/changewalletaddress`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -706,7 +706,7 @@ export const addToWatchList = (data) => {
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/modifywatchlist`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/modifywatchlist`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -763,7 +763,7 @@ export const topUp = (value) => {
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/topup`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/topup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -827,7 +827,7 @@ export const addPaymentMethod = (data) => {
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/paymentmethod`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/paymentmethod`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -936,7 +936,7 @@ export const uploadId = (data) => {
       data.imageUrl = imageUrl
 
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/addidentity`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/addidentity`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -1000,7 +1000,7 @@ export const buyCrypto = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/buyasset`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/buyasset`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1060,7 +1060,7 @@ export const sellCrypto = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/sellasset`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/sellasset`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1120,7 +1120,7 @@ export const convertCrypto = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/convertasset`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/convertasset`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1179,7 +1179,7 @@ export const sendCrypto = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/sendasset`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/sendasset`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1256,7 +1256,7 @@ export const Withdrawal = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/withdraw`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/withdraw`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1333,7 +1333,7 @@ export const sendTaxCode = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/updatetaxcode`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/updatetaxcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1394,7 +1394,7 @@ export const sendUstCode = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/updateustcode`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/updateustcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1454,7 +1454,7 @@ export const sendKtcCode = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/updatektccode`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/updatektccode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1514,7 +1514,7 @@ export const sendTntCode = (data) => {
       //do some check on the server if its actually login before proceding to dispatch
       let { token } = getState().userAuth
 
-      let response = await fetch(`http://192.168.42.108:8080/auth/updatetntcode`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/updatetntcode`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -1602,7 +1602,7 @@ export const addNotificationToken = (notificationtoken)=>{
 
     try {
       
-      let response = await fetch(`http://192.168.42.108:8080/auth/notificationtoken`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/notificationtoken`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -1651,9 +1651,7 @@ export const addNotificationToken = (notificationtoken)=>{
         message: 'network error'
       }
     }
-
   }
-
 }
 
 export const getNotifications = ()=>{
@@ -1662,7 +1660,7 @@ export const getNotifications = ()=>{
 
     try {
       
-      let response = await fetch(`http://192.168.42.108:8080/auth/notifications`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/notifications`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -1695,6 +1693,7 @@ export const getNotifications = ()=>{
       if (response.status === 200) {
 
         let data = await response.json()
+        dispatch({ type: UPDATEUSER, payload: data.response.user })
         
        
         return {
@@ -1722,7 +1721,7 @@ export const updateCredentials = (data)=>{
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/credentials`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/credentials`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -1781,7 +1780,7 @@ export const secureAccount = (data)=>{
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/secureaccount`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/secureaccount`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -1839,7 +1838,7 @@ export const offPinSwitch = (data)=>{
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/offpinswitch`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/offpinswitch`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -1897,7 +1896,7 @@ export const onPinSwitch = (data)=>{
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/onpinswitch`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/onpinswitch`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -1955,7 +1954,7 @@ export const toggleBalance = (data)=>{
     let { token } = getState().userAuth
 
     try {
-      let response = await fetch(`http://192.168.42.108:8080/auth/togglebalance`, {
+      let response = await fetch(`http://192.168.42.176:8080/auth/togglebalance`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, ScrollView, Pressable, StyleSheet, Dimensions } from 'react-native'
 import { Feather, Ionicons } from '@expo/vector-icons';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import GiftNotification from '../component/giftnotification';
 import Error from '../component/errorComponent'
 import Loader from '../loaders/Loader'
@@ -23,14 +23,16 @@ const Notification = ({ navigation }) => {
     let fetchNotification = async()=>{
         setIsLoading(true)
         let res = await dispatch(getNotifications())
-
+        if(!res){
+            return
+        }
         if(!res.bool){
             setIsError(true)
             setIsLoading(false)
             return
         }
         
-        setNotifications(res.message)
+        setNotifications(res.message.arr)
         setIsLoading(false)
 
     }

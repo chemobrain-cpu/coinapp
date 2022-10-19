@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions, ActivityIndicator } from 'react-native'
+import React, { useState} from 'react'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions, ActivityIndicator,KeyboardAvoidingView } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress'
 import { useDispatch } from "react-redux";
 import { confirmPhone } from "../store/action/appStorage";
-import { useRoute, dispatch } from "@react-navigation/native";
+import { useRoute} from "@react-navigation/native";
 import AuthModal from '../modals/authModal'
 
 const Authenticate = ({ navigation }) => {
@@ -14,10 +14,7 @@ const Authenticate = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(false)
     const route = useRoute();
     let dispatch = useDispatch()
-    useEffect(() => {
-        navigation.removeListener('beforeRemove')
-
-    }, [])
+   
 
     const {
         email
@@ -96,15 +93,16 @@ const Authenticate = ({ navigation }) => {
                 </View>
 
             </View>
+            
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.body}>
                 <Text style={styles.headerText}>
                     Enter authentication code
                 </Text >
-                <Text style={styles.text}>Enter the 7-digit code we just texted to your phone number, +234 09071991647.</Text>
+                <Text style={styles.text}>Enter the 7-digit code we just texted to your phone number, xxxxxxxxx.</Text>
 
                 <View style={styles.formContainer}>
 
-                    <View style={styles.CodeCon}>
+                    <KeyboardAvoidingView style={styles.CodeCon}>
                         <Text style={styles.CodeText}>Code</Text>
                         <TextInput
                             style={styles.input}
@@ -115,7 +113,7 @@ const Authenticate = ({ navigation }) => {
                             maxLength={7}
                         />
 
-                    </View>
+                    </KeyboardAvoidingView>
 
                 </View>
 
@@ -250,7 +248,7 @@ const styles = StyleSheet.create({
 
     buttonContinue: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         marginBottom: 20,
@@ -261,7 +259,7 @@ const styles = StyleSheet.create({
     },
     buttonResend: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: 'rgb(240,240,240)',
         marginBottom: 20,

@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     checkBtnContainer: {
         width: '85%',
         alignSelf: 'center',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         marginBottom: 25,
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     resendBtnContainer: {
         width: '85%',
         alignSelf: 'center',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: 'rgb(240,240,240)',
         display: 'flex',

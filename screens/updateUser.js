@@ -8,7 +8,8 @@ import {
     StyleSheet,
     Dimensions,
     TextInput,
-    ActivityIndicator
+    ActivityIndicator,
+    KeyboardAvoidingView
 } from 'react-native'
 
 import { Feather} from '@expo/vector-icons';
@@ -124,7 +125,7 @@ const UserCard = ({ navigation }) => {
                 </View>
 
 
-                <View style={styles.formCon}>
+                <KeyboardAvoidingView style={styles.formCon}>
                     <Text style={styles.label}>First Name</Text>
 
                     <TextInput
@@ -134,9 +135,9 @@ const UserCard = ({ navigation }) => {
                     />
                     <Text style={styles.errorText}>{firstNameError ? firstNameError : ""}</Text>
 
-                </View>
+                </KeyboardAvoidingView>
 
-                <View style={styles.formCon}>
+                <KeyboardAvoidingView style={styles.formCon}>
                     <Text style={styles.label}>Last Name</Text>
 
                     <TextInput
@@ -146,7 +147,7 @@ const UserCard = ({ navigation }) => {
                     />
                     <Text style={styles.errorText}>{lastNameError ? firstNameError : ""}</Text>
 
-                </View>
+                </KeyboardAvoidingView>
 
 
 
@@ -270,7 +271,7 @@ const styles = StyleSheet.create({
 
     buttonCon: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 10,
         backgroundColor: '#1652f0',
         display: 'flex',

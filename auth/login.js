@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Dimensions, ActivityIndicator } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Dimensions, ActivityIndicator,KeyboardAvoidingView } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { login } from "../store/action/appStorage";
@@ -26,12 +26,12 @@ const Login = ({ navigation }) => {
             e.preventDefault();
             setModalVisible(true)
         });
+        return focus
         
     }, [navigation]);
     
 
     let navigateHandler = () => {
-        navigation.removeListener('beforeRemove')
         setModalVisible(false)
         setTimeout(() => { navigation.goBack() }, 1000)
     }
@@ -39,7 +39,7 @@ const Login = ({ navigation }) => {
     let navigateToBrowser = async (data) => {
         if (data == 'password') {
             //navigate to password reset page
-            await WebBrowser.openBrowserAsync('http://169.254.188.119227:8080/forgetPassword')
+            await WebBrowser.openBrowserAsync('http://169.254.188.119:8080/forgetPassword')
         } else {
             //navigate to policy page
             await WebBrowser.openBrowserAsync('http://192.168.42.227:8080/policy')
@@ -51,11 +51,7 @@ const Login = ({ navigation }) => {
     }
     const changePassword = (e) => {
         setPassword(e)
-        let error = validateText(e)
-        if (error) {
-            return setPasswordError(error)
-        }
-        return setPasswordError('')
+       
     }
 
 
@@ -112,7 +108,7 @@ const Login = ({ navigation }) => {
                 </View>
 
                 <Text style={styles.headerText}>Sign in to coinbase </Text>
-                <View>
+                <KeyboardAvoidingView>
                     <Text style={styles.emailText}>Email</Text>
                     <TextInput
                         style={styles.input}
@@ -127,8 +123,10 @@ const Login = ({ navigation }) => {
                         style={styles.input}
                         onChangeText={changePassword}
                         value={password}
+                        maxLength={5}
                         placeholder="password"
-                        keyboardType="visible-password"
+                        
+                        keyboardType='numeric'
                     />
 
 
@@ -136,7 +134,7 @@ const Login = ({ navigation }) => {
                         {isLoading ? <ActivityIndicator color='#fff' size='small' /> : <Text style={styles.submitBtnTxt}>Sign In</Text>}
                     </TouchableOpacity>
 
-                </View>
+                </KeyboardAvoidingView>
 
                 <View style={styles.forgetPasswordCon}>
                     <TouchableOpacity style={styles.forgetPasswordText}>

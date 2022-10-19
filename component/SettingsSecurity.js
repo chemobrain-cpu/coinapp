@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: "#ddd",
         borderRadius: 30,
-        paddingVertical: 15,
+        paddingVertical: 17,
         paddingHorizontal: 100,
     },
     appButtonText: {

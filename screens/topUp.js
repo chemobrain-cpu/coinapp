@@ -29,46 +29,15 @@ const TopUp = ({ navigation }) => {
 
     const dispatch = useDispatch()
 
-    let dollarPriceUi = (data) => {
+    let dataUi = (data) => {
         if (data.length <= 8) {
             return <Text style={{ ...styles.dollarPrice, fontSize: 30 }}>${data}</Text>
 
         }
         return <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>${data}</Text>
 
-
-
     }
 
-
-
-
-    //deciding where to go depending on the action
-    let navigateToCard = () => {
-        if (userStatus == 'pay') {
-            navigation.navigate('CardForm')
-        }
-        else if (userStatus == "id") {
-            navigation.navigate('VerifyId')
-        }
-        else if (userStatus == 'insufficient') {
-            //navigate user to topup
-            return
-
-        }
-        else if (userStatus == "error") {
-            return
-        }
-        else if (userStatus == "bought") {
-            //i should be able to navigate to my asset
-            return navigation.navigate("Assets")
-        }
-    }
-
-
-    let modalHandler = () => {
-        setModalVisible(prev => !prev)
-    }
 
     //button function
     let button = (num) => {
@@ -152,7 +121,7 @@ const TopUp = ({ navigation }) => {
 
         <SafeAreaView style={styles.screen}>
             <ScrollView contentContainerStyle={styles.scrollContainer} stickyHeaderIndices={[0]}>
-                <View style={{ display: 'flex', width: '100%' }}>
+                <View style={styles.headerOuterCon}>
                     <View style={styles.headerContainer}>
                         <Pressable onPress={() => navigation.goBack()} style={styles.headerContainerIcon} >
                             <AntDesign name="close" size={23} />
@@ -162,10 +131,6 @@ const TopUp = ({ navigation }) => {
                             <Text style={styles.title}>Top Up Account</Text>
 
                         </Pressable>
-
-
-
-
 
                     </View>
                 </View>
@@ -181,7 +146,7 @@ const TopUp = ({ navigation }) => {
 
                             <View style={styles.dollarPriceCon}>
 
-                                {dollarPriceUi(Number(value))}
+                                {dataUi(Number(value))}
 
                             </View>
 
@@ -287,8 +252,12 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         paddingHorizontal: 15,
     },
+    headerOuterCon:{ 
+        display: 'flex', 
+        width: '100%' 
+    },
     headerContainer: {
-        paddingTop: 40,
+        paddingTop: 60,
         display: "flex",
         flexDirection: "row",
         marginBottom: 45,
@@ -305,7 +274,8 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 20,
-        fontFamily: 'Poppins',
+        fontFamily: 'ABeeZee',
+        textAlign: 'center'
 
     },
     balance: {
@@ -320,7 +290,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 45,
-        marginBottom: 80,
+        marginBottom: 90,
         width: '100%'
     },
     valueCon: {
@@ -465,7 +435,7 @@ const styles = StyleSheet.create({
     button: {
         width: '95%',
         backgroundColor: '#1652f0',
-        paddingVertical: 16,
+        paddingVertical: 17,
         borderRadius: 30,
         display: 'flex',
         alignItems: 'center',

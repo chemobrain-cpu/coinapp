@@ -112,6 +112,7 @@ const Home = ({ navigation }) => {
         setTopMoversCoinList([...[response.message[5], response.message[6], response.message[15], response.message[7], response.message[11], response.message[10], response.message[8]]])
 
         setIsMoversLoading(false)
+        setIsLoading(false)
 
     }
 
@@ -128,6 +129,7 @@ const Home = ({ navigation }) => {
             setWatchListCoins([...[response.message[0], response.message[1], response.message[2], response.message[3], response.message[4], response.message[5], response.message[6]]]);
 
             setIsWatchListLoading(false)
+            setIsLoading(false)
 
         } else {
             let transformIds = user.watchList.join('%2c')
@@ -139,6 +141,7 @@ const Home = ({ navigation }) => {
             }
             setWatchListCoins(response.message);
             setIsWatchListLoading(false)
+            setIsLoading(false)
         }
 
 
@@ -489,17 +492,19 @@ const styles = StyleSheet.create({
     header: {
         display: 'flex',
         flexDirection: "row",
+
     },
     screen: {
         flex: 1,
         backgroundColor: "#fff",
         paddingHorizontal: 0,
+        
     },
     scrollContainer: {
         paddingBottom: 100,
     },
     headerContainer: {
-        paddingTop: 50,
+        paddingTop:60,
         display: "flex",
         flexDirection: "row",
         justifyContent: 'space-between',

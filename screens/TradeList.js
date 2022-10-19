@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput,Pressable } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput,Pressable,KeyboardAvoidingView } from 'react-native'
 import { Feather, FontAwesome } from '@expo/vector-icons'
 import CryptoCard from '../component/currencyContainer'
 import WalletAssetLoader from "../loaders/walletAssetsLoader";
@@ -146,7 +146,7 @@ let TradeList = ({ navigation }) => {
 
       <View style={styles.assetsheaderCon}>
 
-        <View style={focus ? { ...styles.inputContainer, borderColor: '#1652f0' } : { ...styles.inputContainer }}>
+        <KeyboardAvoidingView style={focus ? { ...styles.inputContainer, borderColor: '#1652f0' } : { ...styles.inputContainer }}>
           <FontAwesome name="search" size={18} color={focus ? "#1652f0" : "black"} />
           <TextInput
             style={{ ...styles.input, borderColor: 'orange' }}
@@ -161,7 +161,7 @@ let TradeList = ({ navigation }) => {
             }}
 
           />
-        </View>
+        </KeyboardAvoidingView>
 
       </View>
 

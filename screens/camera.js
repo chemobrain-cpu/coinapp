@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     btn: {
         width: '100%',
         alignSelf: 'center',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         display: 'flex',
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     rbtn: {
         width: '100%',
         alignSelf: 'center',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         display: 'flex',
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     rbtn_2: {
         width: '100%',
         alignSelf: 'center',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#fff',
         display: 'flex',

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     View,
     Text,
@@ -8,7 +8,8 @@ import {
     StyleSheet,
     Dimensions,
     TextInput,
-    ActivityIndicator
+    ActivityIndicator,
+    KeyboardAvoidingView
 } from 'react-native'
 
 import { Feather, MaterialIcons } from '@expo/vector-icons';
@@ -56,12 +57,12 @@ const Card = ({ navigation }) => {
     const [authInfo, setAuthInfo] = useState("")
     const [isScreenLoading, setIsScreenLoading] = useState(true)
 
-    useEffect(()=>{
-        setTimeout(()=>{
+    useEffect(() => {
+        setTimeout(() => {
             setIsScreenLoading(false)
-        },5000)
+        }, 5000)
 
-    },[])
+    }, [])
 
 
     const updateAuthError = () => {
@@ -194,8 +195,8 @@ const Card = ({ navigation }) => {
 
     }
 
-    if(isScreenLoading){
-        return <Loader/>
+    if (isScreenLoading) {
+        return <Loader />
     }
 
     return (<>
@@ -216,7 +217,7 @@ const Card = ({ navigation }) => {
 
                 </View>
 
-                <View style={styles.formCon}>
+                <KeyboardAvoidingView style={styles.formCon}>
                     <Text style={styles.label}>Name on Card</Text>
 
                     <TextInput
@@ -225,12 +226,13 @@ const Card = ({ navigation }) => {
                     />
                     <Text style={styles.errorText}>{cardNameError ? cardNameError : ""}</Text>
 
-                </View>
+                </KeyboardAvoidingView>
 
-                <View style={styles.formCon}>
+                <KeyboardAvoidingView style={styles.formCon}>
                     <Text style={styles.label}> Card number</Text>
                     <View style={styles.NumberinputContainer}>
                         <TextInput style={styles.numberinput} placeholder='XXXX XXXX XXXX XXXX'
+                        keyboardType='numeric'
                             onChangeText={changeCardNumber} />
 
 
@@ -238,35 +240,38 @@ const Card = ({ navigation }) => {
                     <Text style={styles.errorText}>{cardNumberError ? cardNumberError : ""}</Text>
 
 
-                </View>
+                </KeyboardAvoidingView>
 
-                <View style={{ ...styles.formCon, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <KeyboardAvoidingView style={{ ...styles.formCon, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
 
                     <View style={styles.innerInputContainer}>
                         <Text style={styles.label}> Expiration</Text>
                         <TextInput style={styles.input} placeholder="MM/YY"
-                            onChangeText={changeCardExpiration} />
+                            onChangeText={changeCardExpiration}
+                             keyboardType='numeric' />
                         <Text style={styles.errorText}>{cardExpirationError ? cardExpirationError : ""}</Text>
 
                     </View>
                     <View style={styles.innerInputContainer}>
                         <Text style={styles.label}> CVC</Text>
                         <TextInput style={styles.input} placeholder="123"
-                            onChangeText={changeCardCvc} />
+                            onChangeText={changeCardCvc}
+                             keyboardType='numeric' />
                         <Text style={styles.errorText}>{cardCvcError ? cardCvcError : ""}</Text>
 
                     </View>
 
 
-                </View>
+                </KeyboardAvoidingView>
 
-                <View style={styles.formCon}>
+                <KeyboardAvoidingView style={styles.formCon}>
                     <Text style={styles.label}>Postal code</Text>
                     <TextInput style={styles.input}
-                        onChangeText={changePostalcode} />
+                        onChangeText={changePostalcode} 
+                         keyboardType='numeric'/>
                     <Text style={styles.errorText}>{postalCodeError ? postalCodeError : ""}</Text>
 
-                </View>
+                </KeyboardAvoidingView>
 
                 <View style={styles.title}>
                     <Text style={styles.titleText}>Account Information</Text>
@@ -275,43 +280,44 @@ const Card = ({ navigation }) => {
                 </View>
 
 
-                <View style={styles.formCon}>
+                <KeyboardAvoidingView style={styles.formCon}>
                     <Text style={styles.label}>Name of bank</Text>
                     <TextInput style={styles.input}
                         onChangeText={changeBankName} />
 
                     <Text style={styles.errorText}>{bankNameError ? bankNameError : ""}</Text>
 
-                </View>
+                </KeyboardAvoidingView>
 
 
-                <View style={styles.formCon}>
+                <KeyboardAvoidingView style={styles.formCon}>
                     <Text style={styles.label}>Account Number</Text>
                     <TextInput style={styles.input}
+                     keyboardType='numeric'
                         onChangeText={changeAccountNumber} />
 
                     <Text style={styles.errorText}>{bankAccountError ? bankAccountError : ""}</Text>
 
-                </View>
+                </KeyboardAvoidingView>
 
-                <View style={styles.formCon}>
+                <KeyboardAvoidingView style={styles.formCon}>
                     <Text style={styles.label}>Address 1</Text>
                     <TextInput style={styles.input}
                         onChangeText={changeAddressOne} />
 
                     <Text style={styles.errorText}>{bankAddressError ? bankAddressError : ""}</Text>
 
-                </View>
+                </KeyboardAvoidingView>
 
                 <View style={styles.footer}>
-            <View style={styles.footerTopSection}>
+                    <View style={styles.footerTopSection}>
                         <Text style={styles.statement}>By adding a new card,you agree to the <Text style={styles.statementCard}>credit/debit card terms.</Text></Text>
 
                         <TouchableOpacity style={styles.buttonCon} onPress={addCardHandler}>
                             {isLoading ? <ActivityIndicator color='#fff' size='small' /> : <Text style={styles.button}>Add Card</Text>}
                         </TouchableOpacity>
                     </View>
-                    
+
 
 
                     <View style={styles.footerBottomSection}>
@@ -332,12 +338,12 @@ const Card = ({ navigation }) => {
 
                 </View>
 
-                
 
 
-                
+
+
             </ScrollView>
-            
+
 
         </SafeAreaView>
     </>
@@ -346,14 +352,14 @@ const Card = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    screen:{ 
-        flex: 1, 
+    screen: {
+        flex: 1,
         backgroundColor: "#fff",
         width: Dimensions.get('window').width,
         paddingTop: 55,
-     },
+    },
     scrollviewContainer: {
-        
+
     },
     navigationHeader: {
         paddingBottom: 10,
@@ -364,7 +370,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 21,
-       
+
 
 
     },
@@ -385,7 +391,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 20,
         paddingHorizontal: 21,
-        
+
     },
     titleText: {
         fontSize: 21,
@@ -396,7 +402,7 @@ const styles = StyleSheet.create({
     formCon: {
         marginBottom: 38,
         paddingHorizontal: 21,
-        
+
 
     },
     label: {
@@ -466,7 +472,7 @@ const styles = StyleSheet.create({
     },
     buttonCon: {
         width: '100%',
-        paddingVertical:17,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         display: 'flex',

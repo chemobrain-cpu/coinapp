@@ -21,7 +21,7 @@ let CryptoCard = ({ navigationHandler, coin }) => {
 
             <View style={styles.priceContainer}>
                 <Text style={styles.symbol}>{symbol}</Text>
-                <Text style={styles.price}>${current_price.toFixed(3)}</Text>
+                <Text style={styles.price}>${current_price.toFixed(2)}</Text>
             </View>
 
             <View style={styles.percentageContainer}>
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
 
     },
     image: {
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
         marginTop: 10
     },
     priceContainer: {

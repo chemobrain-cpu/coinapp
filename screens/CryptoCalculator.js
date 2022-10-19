@@ -128,7 +128,6 @@ const Calculator = ({ navigation }) => {
     //executing action like buy,sell,send e.t.c
     let proceedHandler = async () => {
         if (action == 'buy') {
-
             if (!value) {
                 return
             }
@@ -184,6 +183,17 @@ const Calculator = ({ navigation }) => {
                 data.quantity = Number(value)
             }
             setIsLoading(true)
+
+            if(user.isRequiredPin){
+                setIsLoading(false)
+                return navigation.navigate('Authorize',
+                {
+                   data:data,
+                   action:'buy' 
+                })
+            }
+
+
             let res = await dispatch(buyCrypto(data))
 
             if (!res.bool) {
@@ -264,6 +274,15 @@ const Calculator = ({ navigation }) => {
                 data.quantity = Number(value)
             }
             setIsLoading(true)
+
+            if(user.isRequiredPin){
+                setIsLoading(false)
+                return navigation.navigate('Authorize',
+                {
+                   data:data,
+                   action:'sell' 
+                })
+            }
            
             let res = await dispatch(sellCrypto(data))
 
@@ -338,14 +357,25 @@ const Calculator = ({ navigation }) => {
                 setModalText("Your available asset balance is not enough")
                 return
             }
-           
 
-            return navigation.navigate("CryptoForm", {
+            let data = {
                 price: Number(value),
                 name: name,
                 quantity: Number(value) / conversionRate
 
-            })
+            }
+
+            if(user.isRequiredPin){
+                setIsLoading(false)
+                return navigation.navigate('Authorize',
+                {
+                   data:data,
+                   action:'send' 
+                })
+            }
+           
+
+            return navigation.navigate("CryptoForm", data)
 
 
 
@@ -368,7 +398,7 @@ const Calculator = ({ navigation }) => {
        
         if (assets.length > 0) {
             setUserAsset(assets[0])
-            let cryptoQuantity = assets[0].quantity.toFixed(3)
+            let cryptoQuantity = assets[0].quantity
             console.log(cryptoQuantity)
             setCryptoQuantity(cryptoQuantity)
         }
@@ -378,14 +408,14 @@ const Calculator = ({ navigation }) => {
     }, []);
 
 
-    let dollarPriceUi = (data) => {
+    let dataUi = (data) => {
         if (data.length <= 8) {
             return <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>${data}</Text>
         }
         return <Text style={{ ...styles.dollarPrice, fontSize: 18 }}>${data}</Text>
     }
 
-    let invertedDollarPriceUi = (data) => {
+    let inverteddataUi = (data) => {
         if (data.length <= 8) {
             return <Text style={{ ...styles.dollarPrice, fontSize: 20 }}>${data}</Text>
         }
@@ -423,7 +453,7 @@ const Calculator = ({ navigation }) => {
     return (<>
         <CalculatorModal modalVisible={modalVisible} changeVisibility={changeVisibility} navigateToCard={navigateToCard} modalTopic={modalTopic} modalText={modalText} />
 
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <SafeAreaView style={styles.screen}>
             <ScrollView contentContainerStyle={styles.scrollContainer} stickyHeaderIndices={[0]}>
                 <View style={{ display: 'flex', width: '100%' }}>
                     <View style={{ ...styles.headerContainer, }}>
@@ -434,10 +464,10 @@ const Calculator = ({ navigation }) => {
                         {userAsset ?
                             <TouchableOpacity style={styles.headerContainerTitle} >
                                 <Text style={styles.title}>Enter amount</Text>
-                                {userAsset ? <Text style={styles.balance}> {cryptoQuantity} of {truncate(id, 5)} available </Text> : <Text style={styles.balance}> 0 of {id} available </Text>}
+                                {userAsset ? <Text style={styles.balance}> {Number(cryptoQuantity).toFixed(4)} of {truncate(id, 5)} available </Text> : <Text style={styles.balance}> 0 of {id} available </Text>}
                             </TouchableOpacity> : <TouchableOpacity style={styles.headerContainerTitle} >
                                 <Text style={styles.title}>Enter amount</Text>
-                                <Text style={styles.balance}>$ 0 of {id} available </Text>
+                                <Text style={styles.balance}>0 of {id} available </Text>
                             </TouchableOpacity>}
 
 
@@ -459,10 +489,10 @@ const Calculator = ({ navigation }) => {
                         </View> : <View style={styles.twoPriceColumn}>
                             {invert ? <View style={styles.dollarPriceCon}>
                                 {invertedCryptoPriceUi(value)}
-                                {invertedDollarPriceUi((conversionRate * Number(value)).toFixed(4))}
+                                {inverteddataUi((conversionRate * Number(value)).toFixed(4))}
 
                             </View> : <View style={styles.dollarPriceCon}>
-                                {dollarPriceUi(value)}
+                                {dataUi(value)}
                                 {cryptoPriceUi((Number(value) / conversionRate).toFixed(4))}
                             </View>}
 
@@ -581,11 +611,18 @@ const Calculator = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    screen:{ 
+        flex: 1, 
+        backgroundColor: '#fff' 
+    },
 
     scrollContainer: {
         width: Dimensions.get('window').width,
         paddingHorizontal: 15,
     },
+    headerOuterCon:{ 
+        flex: 1, 
+     },    
     headerContainer: {
         paddingTop: 40,
         display: "flex",
@@ -732,7 +769,6 @@ const styles = StyleSheet.create({
     },
     calculatorCon: {
         width: '100%',
-        height: 250
     },
     numberContainer: {
         display: 'flex',
@@ -748,8 +784,8 @@ const styles = StyleSheet.create({
 
     },
     number: {
-        fontSize: 28,
-        fontFamily: 'Poppins'
+        fontSize: 30,
+        fontFamily: 'ABeeZee'
     },
 
 
@@ -761,16 +797,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     button: {
-        width: '95%',
+        width: '100%',
         backgroundColor: '#1652f0',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },
     buttonText: {
-        fontSize: 15,
+        fontSize: 18,
         fontFamily: "ABeeZee",
         color: '#fff',
 

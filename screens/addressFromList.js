@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Dimensions} from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Dimensions,KeyboardAvoidingView} from 'react-native'
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { useSelector, } from "react-redux"
 import { useDispatch, } from "react-redux"
@@ -143,7 +143,7 @@ let AddressFromList = ({ navigation }) => {
 
             </View>
             <View style={styles.searchCon}>
-                <View style={focus ? { ...styles.inputContainer, borderColor: '#1652f0' } : { ...styles.inputContainer }}>
+                <KeyboardAvoidingView style={focus ? { ...styles.inputContainer, borderColor: '#1652f0' } : { ...styles.inputContainer }}>
                     <FontAwesome name="search" size={18} color={focus ? "#1652f0" : "grey"} />
 
                     <TextInput
@@ -152,7 +152,7 @@ let AddressFromList = ({ navigation }) => {
                         value={text}
                         placeholder="Search"
                     />
-                </View>
+                </KeyboardAvoidingView>
 
             </View>
         </View>

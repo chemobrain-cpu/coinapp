@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     },
     tryContainer: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     },
     statusContainer: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

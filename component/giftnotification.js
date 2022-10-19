@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     },
     actionButton: {
         paddingHorizontal: 13,
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         display: 'flex',
         flexDirection: 'row',

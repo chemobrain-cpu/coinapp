@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
 
     },
     bottombuttonsignin: {
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 25,
         backgroundColor: 'rgb(240,240,240)',
         width: '42%',
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
 
     },
     bottombuttonsignup: {
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 25,
         backgroundColor: '#1652f0',
         width: '42%',

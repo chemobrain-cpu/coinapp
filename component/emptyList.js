@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, TextInput, Dimensions } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, TextInput, Dimensions,KeyboardAvoidingView } from 'react-native'
 import { Feather, FontAwesome } from '@expo/vector-icons';
 
 
@@ -22,7 +22,7 @@ let EmptyList = ({ navigation, actionText }) => {
                 </View>
                 <View style={styles.searchCon}>
 
-                    <View style={{ ...styles.inputContainer }}>
+                    <KeyboardAvoidingView style={{ ...styles.inputContainer }}>
                         <FontAwesome name="search" size={18} color={"rgb(100,100,100)"} />
                         <TextInput
                             style={{ ...styles.input, borderColor: 'orange' }}
@@ -31,7 +31,7 @@ let EmptyList = ({ navigation, actionText }) => {
 
 
                         />
-                    </View>
+                    </KeyboardAvoidingView>
 
                 </View>
             </View>

@@ -1,7 +1,7 @@
 import React from "react"
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { View, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
-import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons,Ionicons } from '@expo/vector-icons';
 
 
 let PayLoader = () => {
@@ -9,12 +9,12 @@ let PayLoader = () => {
         <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
             <View >
                 <View style={{ ...styles.headerContainer }}>
-                    <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                    <TouchableOpacity >
                         <Entypo name="menu" size={24} color="black" />
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => alert('notification')}>
-                        <MaterialIcons name="notifications-none" size={30} color="black" />
+                        <Ionicons name="notifications" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
             </View>

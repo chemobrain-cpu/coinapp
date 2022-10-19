@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions,ActivityIndicator} from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions,ActivityIndicator,KeyboardAvoidingView} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress'
 import { useDispatch} from "react-redux";
@@ -100,7 +100,7 @@ const VerifyNumber = ({navigation}) => {
 
 
 
-                <View style={styles.formContainer}>
+                <KeyboardAvoidingView style={styles.formContainer}>
                     <View style={styles.codeCon}>
                         <Text style={styles.countryText}>Country</Text>
                         <View style={styles.selectorContainer}>
@@ -374,7 +374,7 @@ const VerifyNumber = ({navigation}) => {
 
                     </View>
 
-                </View>
+                </KeyboardAvoidingView>
 
 
                 <View>
@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
 
     button: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         marginBottom: 50,

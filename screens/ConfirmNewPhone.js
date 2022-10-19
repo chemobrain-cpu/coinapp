@@ -1,5 +1,5 @@
 import React, { useState,useCallback } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions, ActivityIndicator } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions, ActivityIndicator,KeyboardAvoidingView } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from "react-redux";
 import { confirm } from "../store/action/appStorage";
@@ -66,7 +66,7 @@ const ConfirmNewPhone = ({ navigation }) => {
 
                 <View style={styles.formContainer}>
 
-                    <View style={styles.CodeCon}>
+                    <KeyboardAvoidingView style={styles.CodeCon}>
 
                         <TextInput
                             style={styles.input}
@@ -77,7 +77,7 @@ const ConfirmNewPhone = ({ navigation }) => {
                             maxLength={7}
                         />
 
-                    </View>
+                    </KeyboardAvoidingView>
 
                 </View>
 
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     },
     buttonContinue: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         marginBottom: 20,
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     },
     buttonResend: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: 'rgb(240,240,240)',
         marginBottom: 20,

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     View,
     Text,
@@ -9,44 +9,40 @@ import {
     Dimensions,
 } from "react-native";
 
-import { Feather,FontAwesome} from '@expo/vector-icons';
+import { Feather, FontAwesome } from '@expo/vector-icons';
 import Loader from '../loaders/Loader';
 
 const Pin = ({ navigation }) => {
     let [value, setValue] = useState("")
     let [isLoading, setIsLoading] = useState(true)
 
-    useEffect(()=>{
-        setTimeout(()=>{
+    useEffect(() => {
+        setTimeout(() => {
             setIsLoading(false)
-        },2000)
+        }, 2000)
     })
-   
-   
-  
 
-   
 
-    let dollarPriceUi = (data) => {
+    let dataUi = (data) => {
         data = data.toString()
-        
+
         //convert string to an array
         let arr = []
-        for(let m of data){
+        for (let m of data) {
             arr.push(m)
         }
         return <View style={styles.dollarPriceInnerCon}>
-            <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>{arr[0]?<FontAwesome name="asterisk" size={27} color="black" />:<Feather name="circle" size={27} color="black" />}</Text>
+            <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>{arr[0] ? <FontAwesome name="asterisk" size={27} color="black" /> : <Feather name="circle" size={27} color="black" />}</Text>
 
-            <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>{arr[1]?<FontAwesome name="asterisk" size={27} color="black" />:<Feather name="circle" size={27} color="black" />}</Text>
+            <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>{arr[1] ? <FontAwesome name="asterisk" size={27} color="black" /> : <Feather name="circle" size={27} color="black" />}</Text>
 
-            <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>{arr[2]?<FontAwesome name="asterisk" size={27} color="black" />:<Feather name="circle" size={27} color="black" />}</Text>
+            <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>{arr[2] ? <FontAwesome name="asterisk" size={27} color="black" /> : <Feather name="circle" size={27} color="black" />}</Text>
 
-            <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>{arr[3]?<FontAwesome name="asterisk" size={27} color="black" />:<Feather name="circle" size={27} color="black" />}</Text>
+            <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>{arr[3] ? <FontAwesome name="asterisk" size={27} color="black" /> : <Feather name="circle" size={27} color="black" />}</Text>
 
         </View>
-       
-        
+
+
 
 
 
@@ -56,7 +52,7 @@ const Pin = ({ navigation }) => {
     //button function
     let button = (num) => {
         setValue(prev => {
-            if (prev.length >3) {
+            if (prev.length > 3) {
                 return prev
             }
             return prev + num
@@ -92,11 +88,11 @@ const Pin = ({ navigation }) => {
 
 
     let proceedHandler = async () => {
-        if(!pin){
+        if (!value) {
             return;
         }
-        navigation.navigate("ConfirmPin",{
-            pin:value
+        navigation.navigate("ConfirmPin", {
+            pin: value
         })
 
     }
@@ -108,22 +104,20 @@ const Pin = ({ navigation }) => {
         return <Loader />
     }
 
-   
+
 
 
     return (<>
         {/* modal for proceeding*/}
-        
+
 
         <SafeAreaView style={styles.screen}>
             <ScrollView contentContainerStyle={styles.scrollContainer} stickyHeaderIndices={[0]}>
                 <View style={{ display: 'flex', width: '100%' }}>
                     <View style={styles.headerContainer}>
-                        
 
-                        <Pressable style={styles.headerContainerTitle} >
+                        <Pressable>
                             <Text style={styles.title}>Enter a unique 4 digit pin</Text>
-
                         </Pressable>
 
 
@@ -136,13 +130,13 @@ const Pin = ({ navigation }) => {
 
 
                 <View style={styles.priceContainer}>
-                    
 
-                            <View style={styles.dollarPriceCon}>
 
-                                {dollarPriceUi((value))}
+                    <View style={styles.dollarPriceCon}>
 
-                            </View>
+                        {dataUi((value))}
+
+                    </View>
 
                 </View>
 
@@ -231,9 +225,9 @@ const Pin = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    screen:{ 
-        flex: 1, 
-        backgroundColor: '#fff' 
+    screen: {
+        flex: 1,
+        backgroundColor: '#fff'
     },
 
     scrollContainer: {
@@ -246,18 +240,18 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginBottom: 45,
         alignItems: 'center',
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     headerContainerIcon: {
-      
+
 
     },
-    
+
 
     title: {
         fontSize: 20,
         fontFamily: 'ABeeZee',
-        textAlign:'center'
+        textAlign: 'center'
 
     },
     balance: {
@@ -273,29 +267,29 @@ const styles = StyleSheet.create({
         marginTop: 45,
         marginBottom: 90,
         width: '100%',
-        justifyContent:'center'
+        justifyContent: 'center'
     },
-    
-    
+
+
     dollarPriceCon: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        width:'75%',
-        alignSelf:'center'
+        width: '75%',
+        alignSelf: 'center'
     },
-    dollarPriceInnerCon:{
+    dollarPriceInnerCon: {
         display: 'flex',
-        flexDirection:'row',
+        flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        width:'100%'
+        width: '100%'
 
     },
     dollarPrice: {
         fontFamily: 'ABeeZee',
         color: '#1652f0',
-        
+
 
     },
     cryptoPrice: {
@@ -413,7 +407,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-       
+
     },
     button: {
         width: '95%',

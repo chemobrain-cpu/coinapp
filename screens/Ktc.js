@@ -8,7 +8,8 @@ import {
     ScrollView,
     Dimensions,
     TextInput,
-    Modal
+    Modal,
+    KeyboardAvoidingView
 } from "react-native";
 
 import { Feather } from '@expo/vector-icons';
@@ -168,7 +169,7 @@ const Ktc = ({ navigation }) => {
 
                
                 
-                    <View style={styles.inputContainer}>
+                    <KeyboardAvoidingView style={styles.inputContainer}>
                         <TextInput style={styles.input}
                         placeholder="Enter KTC code"
                         onChangeText={changeHandler}
@@ -178,7 +179,7 @@ const Ktc = ({ navigation }) => {
                             <Text style={styles.submitText}>send</Text>
                         </TouchableOpacity>
 
-                    </View>
+                    </KeyboardAvoidingView>
 
 
 
@@ -377,7 +378,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     footerButton: {
-        paddingVertical: 15,
+        paddingVertical: 17,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',

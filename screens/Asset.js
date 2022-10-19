@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
 
     },
     buttonContainer: {
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: 'rgb(240,240,240)',
         width: '95%',

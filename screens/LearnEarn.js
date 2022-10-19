@@ -1,15 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, SafeAreaView, ScrollView, Pressable, StyleSheet, Image, Dimensions, Share } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import { Card } from "react-native-shadow-cards";
-import AuthModal from '../modals/authModal'
+import AuthModal from '../modals/authModal';
+import Loader from '../loaders/Loader'
+import { useSelector } from "react-redux";
 
 const LearnEarn = ({ navigation }) => {
+     let { user } = useSelector(state => state.userAuth)
     const [header, setHeader] = useState(false);
-    const [link, setLink] = useState('coinbas...rierhi_c')
+    const [link, setLink] = useState("")
     const [modalVisible, setModalVisible] = useState(false)
     const [isAuthError, setIsAuthError] = useState(false)
     const [authInfo, setAuthInfo] = useState("")
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        let url = 'coinbaseether.com'
+        let username = user.lastName
+        let fullUrl = `${url}/${username}`
+        setLink(fullUrl)
+        setTimeout(()=>{
+            setIsLoading(false)
+        },4000)
+        
+      }, []);
 
     const scrollHandler = (e) => {
         if (e.nativeEvent.contentOffset.y > 5) {
@@ -39,6 +54,10 @@ const LearnEarn = ({ navigation }) => {
         setIsAuthError(true)
         setAuthInfo('This feature is not available for your account yet')
 
+    }
+
+    if(isLoading){
+        return <Loader/>
     }
 
     return (<>
@@ -236,7 +255,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: 'rgb(240,240,240)',
         marginHorizontal: 18,

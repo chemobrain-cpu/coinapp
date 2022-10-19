@@ -1,8 +1,8 @@
 import React from 'react'
-import {View,Text,TouchableOpacity,StyleSheet} from "react-native"
+import {View,Text,Pressable,StyleSheet} from "react-native"
 
 const Button = ({text,pressHandler,children})=>{
-    return <TouchableOpacity 
+    return <Pressable 
     style={styles.actionInnerContainer}
     onPress={()=>pressHandler(`${text}`)}>
     <View style={styles.action} >
@@ -11,7 +11,7 @@ const Button = ({text,pressHandler,children})=>{
     </View>
     <Text style={styles.actionText}>{text}</Text>
 
-</TouchableOpacity>
+</Pressable>
 }
 
 const styles = StyleSheet.create({

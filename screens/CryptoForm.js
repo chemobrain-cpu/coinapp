@@ -8,7 +8,8 @@ import {
     StyleSheet,
     Dimensions,
     TextInput,
-    ActivityIndicator
+    ActivityIndicator,
+    KeyboardAvoidingView
 } from 'react-native'
 
 import { Feather } from '@expo/vector-icons';
@@ -122,7 +123,7 @@ const CryptoForm = ({ navigation }) => {
                     <TouchableOpacity onPress={() => navigation.goBack()} style={{ ...styles.goback }} >
                         <Feather name="arrow-left" size={24} color="rgb(44, 44, 44)" />
                     </TouchableOpacity>
-                    <Text style={styles.titleText}>You're about sending {quantity.toFixed(3)} {name} worthing ${(price).toFixed(3)}</Text>
+                    <Text style={styles.titleText}>You're about sending {quantity.toFixed(5)} {name} worthing ${price.toFixed(5)}</Text>
 
                 </View>
 
@@ -131,13 +132,13 @@ const CryptoForm = ({ navigation }) => {
 
 
 
-                <View style={styles.formCon}>
+                <KeyboardAvoidingView style={styles.formCon}>
                     <TextInput style={styles.input}
                         onChangeText={changeAddressOne}
                         placeholder="Enter crypto address" />
 
 
-                </View>
+                </KeyboardAvoidingView>
 
 
                 <View style={styles.footer}>
@@ -279,7 +280,7 @@ const styles = StyleSheet.create({
     },
     buttonCon: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         display: 'flex',

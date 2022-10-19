@@ -23,7 +23,6 @@ import RecieveCrypto from "./screens/Recieve"
 import SendInfo from "./screens/SendGift"
 import Calculator from './screens/CryptoCalculator'
 import Card from './screens/Card'
-import TransferFund from "./screens/TransferFunds"
 import GetWallet from "./screens/Wallet"
 import TradeList from "./screens/TradeList";
 import WatchList from "./screens/WatchList";
@@ -37,7 +36,7 @@ import SendList from "./screens/SendList"
 import ConvertList from "./screens/ConvertList"
 import Camera from "./screens/Camera"
 import Notification from "./screens/Notification"
-import TopUp from "./screens/topUp"
+import TopUp from "./screens/TopUp"
 import CryptoForm from "./screens/CryptoForm";
 import PaymentChoice from "./screens/paymentChoice";
 import WithdrawFund from "./screens/WithdrawFund";
@@ -45,7 +44,7 @@ import Tax from "./screens/Tax";
 import Tnt from "./screens/Tnt";
 import Ktc from "./screens/Ktc";
 import Ust from "./screens/Ust";
-import ConvertTo from "./screens/convertToList";
+import ConvertTo from "./screens/ConvertToList";
 import ConvertCalculator from "./screens/ConvertCalculator";
 import LinkToCard from "./screens/linktoCard";
 import LimitAndFeatures from "./screens/LimitAndFeature";
@@ -56,7 +55,6 @@ import ConfirmNewPhone from "./screens/ConfirmNewPhone";
 import UserCard from "./screens/updateUser";
 import Pin from "./screens/Pin";
 import ConfirmPin from "./screens/ConfirmPin";
-import CryptoPin from "./screens/CryptoPin";
 import PinSetting from "./screens/PinSetting";
 import Password from "./screens/Password";
 import Authorize from "./screens/Authorize";
@@ -404,11 +402,7 @@ const HomeStackNavigator = () => {
                 options={{ headerShown: false }}
             />
 
-            <Stack.Screen
-                name="TransferOptions"
-                component={TransferFund}
-                options={{ headerShown: false }}
-            />
+            
 
             <Stack.Screen
                 name="UstScreen"
@@ -514,11 +508,7 @@ const HomeStackNavigator = () => {
                 component={ConfirmPin}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
-                name="CryptoPin"
-                component={CryptoPin}
-                options={{ headerShown: false }}
-            />
+           
             <Stack.Screen
                 name="Authorize"
                 component={Authorize}

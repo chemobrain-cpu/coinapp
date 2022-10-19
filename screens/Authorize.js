@@ -10,24 +10,31 @@ import {
 } from "react-native";
 
 import { Feather, FontAwesome } from '@expo/vector-icons';
-import Loader from '../loaders/Loader';
+import { useDispatch,useSelector  } from "react-redux"
 import { useRoute } from "@react-navigation/native";
+import { convertCrypto,buyCrypto,sellCrypto } from "../store/action/appStorage";
+import Loader from '../loaders/Loader';
+import AuthModal from '../modals/authModal'
 
 const Authorize = ({ navigation }) => {
+    const route = useRoute();
     let [value, setValue] = useState("")
     let [isLoading, setIsLoading] = useState(true)
-    const route = useRoute();
+    const [isAuthError, setIsAuthError] = useState(false)
+    const [authInfo, setAuthInfo] = useState("")
+    const [url, setUrl] = useState("")
+    let { user } = useSelector(state => state.userAuth)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false)
         }, 2000)
     })
-    //im not destructuring this object but would use it like that
-    route.params
 
 
-    let dollarPriceUi = (data) => {
+    let dataUi = (data) => {
         data = data.toString()
 
         //convert string to an array
@@ -35,6 +42,7 @@ const Authorize = ({ navigation }) => {
         for (let m of data) {
             arr.push(m)
         }
+        console.log(arr)
         return <View style={styles.dollarPriceInnerCon}>
             <Text style={{ ...styles.dollarPrice, fontSize: 25 }}>{arr[0] ? <FontAwesome name="asterisk" size={27} color="black" /> : <Feather name="circle" size={27} color="black" />}</Text>
 
@@ -62,7 +70,6 @@ const Authorize = ({ navigation }) => {
             return prev + num
         })
     }
-
     //dot fun
     let point = () => {
 
@@ -88,21 +95,144 @@ const Authorize = ({ navigation }) => {
         setValue(prev => prev.slice(0, -1))
 
     }
-//handler to proceed with whatever task
-    let proceedHandler = async () => {
-        
 
+
+
+    let proceedHandler = async () => {
+        setIsLoading(true)
+        if (route.params.action == "convert") {
+            //checking if pin is correct
+            if (value !== user.pin) {
+                setIsAuthError(true)
+                setAuthInfo('Incorrect pin !')
+                setIsLoading(false)
+                setUrl("authorize")
+                return
+            }
+            //if pin is correct,proceed
+            let res = await dispatch(convertCrypto(route.params.data))
+            if (!res.bool) {
+                
+                setIsAuthError(true)
+                setAuthInfo('An error occured on the server!')
+                setIsLoading(false)
+                setUrl("error")
+                return
+
+            }
+           
+            setIsAuthError(true)
+            setAuthInfo(`conversion successful has been made`)
+            setIsLoading(false)
+            setUrl('converted')
+            return
+
+        } else if (route.params.action == "buy") {
+            //checking if pin is correct
+            if (value !== user.pin) {
+                setIsAuthError(true)
+                setAuthInfo('Incorrect pin !')
+                setIsLoading(false)
+                setUrl("authorize")
+                return
+            }
+            
+            let res = await dispatch(buyCrypto(route.params.data))
+            if (!res.bool) {
+                setIsAuthError(true)
+                setAuthInfo("An error occured on the server")
+                setIsLoading(false)
+                setUrl("error")
+                return
+
+            }
+           
+           
+
+                setIsAuthError(true)
+                setAuthInfo("you have sucessfully purchase the asset")
+                setIsLoading(false)
+                setUrl("bought")
+                return
+
+        } else if (route.params.action == "sell") {
+             //checking if pin is correct
+             if (value !== user.pin) {
+                setIsAuthError(true)
+                setAuthInfo('Incorrect pin !')
+                setIsLoading(false)
+                setUrl("authorize")
+                return
+            }
+            let res = await dispatch(sellCrypto(route.params.data))
+            if (!res.bool) {
+                
+                setIsAuthError(true)
+                setAuthInfo('An error occured on the server')
+                setIsLoading(false)
+                setUrl("error")
+                return
+
+            }
+         
+
+                setIsAuthError(true)
+                setAuthInfo('you have successfully sold the asset.continue to view assets in this account')
+                setIsLoading(false)
+                setUrl("sell")
+                return
+
+            
+        }else if (route.params.action == "send") {
+            if (value !== user.pin) {
+                setIsAuthError(true)
+                setAuthInfo('Incorrect pin !')
+                setIsLoading(false)
+                setUrl("authorize")
+                return
+            }
+            return navigation.navigate("CryptoForm", route.params.data)
+        }
     }
+
+
+    let changeVisibility = () => {
+        if (url == 'authorize') {
+            setIsAuthError(prev => !prev)
+        }
+        else if (url == "error") {
+            setIsAuthError(prev => !prev)
+        }
+        else if (url == 'converted') {
+            //navigate user to topup
+            setIsAuthError(prev => !prev)
+            return navigation.navigate("SellList")
+           
+
+        }
+        else if (url == "bought") {
+            setIsAuthError(prev => !prev)
+            return navigation.navigate("Assets")
+        }
+        else if (url == "sell") {
+            setIsAuthError(prev => !prev)
+            //i should be able to navigate to my asset
+            return navigation.navigate("Assets")
+        }
+        
+    }
+
 
 
     if (isLoading) {
         return <Loader />
     }
 
+   
 
     return (<>
         {/* modal for proceeding*/}
-
+        {isAuthError && <AuthModal modalVisible={isAuthError} updateVisibility={changeVisibility} message={authInfo} />}
 
         <SafeAreaView style={styles.screen}>
             <ScrollView contentContainerStyle={styles.scrollContainer} stickyHeaderIndices={[0]}>
@@ -111,7 +241,7 @@ const Authorize = ({ navigation }) => {
 
 
                         <Pressable style={styles.headerContainerTitle} >
-                            <Text style={styles.title}>Enter a unique 4 digit pin</Text>
+                            <Text style={styles.title}>Enter pin to confirm</Text>
 
                         </Pressable>
 
@@ -129,7 +259,7 @@ const Authorize = ({ navigation }) => {
 
                     <View style={styles.dollarPriceCon}>
 
-                        {dollarPriceUi((value))}
+                        {dataUi((value))}
 
                     </View>
 
@@ -205,7 +335,7 @@ const Authorize = ({ navigation }) => {
 
                 <View style={styles.buttonCon}>
                     <Pressable style={{ ...styles.button }} onPress={proceedHandler}>
-                        <Text style={styles.buttonText}>Continue</Text>
+                        <Text style={styles.buttonText}>Confirm</Text>
 
                     </Pressable>
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import CryptoCard from '../component/currencyContainer';
-import { useSelector } from "react-redux";
 
 
 const HomeWatchList = ({ navigationHandler, coins}) => {

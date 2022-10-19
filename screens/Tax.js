@@ -8,7 +8,8 @@ import {
     ScrollView,
     Dimensions,
     TextInput,
-    Modal
+    Modal,
+    KeyboardAvoidingView
 } from "react-native";
 
 import { Feather } from '@expo/vector-icons';
@@ -166,7 +167,7 @@ const Tax = ({ navigation }) => {
 
 
 
-                <View style={styles.inputContainer}>
+                <KeyboardAvoidingView style={styles.inputContainer}>
                     <TextInput style={styles.input}
                         placeholder="Enter TAX code"
                         onChangeText={changeHandler}
@@ -175,7 +176,7 @@ const Tax = ({ navigation }) => {
                         <Text style={styles.submitText}>send</Text>
                     </TouchableOpacity>
 
-                </View>
+                </KeyboardAvoidingView>
 
 
                 <View style={styles.footerContainer}>
@@ -248,7 +249,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30
 
     },
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     footerButton: {
-        paddingVertical: 15,
+        paddingVertical: 17,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',

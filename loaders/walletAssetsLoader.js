@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, TextInput, Dimensions } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, TextInput, Dimensions,KeyboardAvoidingView } from 'react-native'
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import ContentLoader, { Rect } from 'react-content-loader/native'
 
@@ -22,8 +22,8 @@ let WalletAssetLoader = ({ navigation,title }) => {
                 </View>
                 <View style={styles.searchCon}>
 
-                    <View style={{ ...styles.inputContainer }}>
-                        <FontAwesome name="search" size={18} color={"grey"} />
+                    <KeyboardAvoidingView style={{ ...styles.inputContainer }}>
+                        <FontAwesome name="search" size={18} color={"black"} />
                         <TextInput
                             style={{ ...styles.input, borderColor: 'orange' }}
                             value={text}
@@ -31,7 +31,7 @@ let WalletAssetLoader = ({ navigation,title }) => {
 
 
                         />
-                    </View>
+                    </KeyboardAvoidingView>
 
                 </View>
             </View>

@@ -9,6 +9,7 @@ import {
   TextInput,
   Dimensions,
   Modal,
+  KeyboardAvoidingView
 } from "react-native";
 
 import { Entypo, MaterialIcons, FontAwesome, Feather, AntDesign,Ionicons } from '@expo/vector-icons';
@@ -208,7 +209,7 @@ const Trades = ({ navigation }) => {
           </View>
         </View>
 
-        <View style={focus ? { ...styles.inputContainer, borderColor: '#1652f0' } : { ...styles.inputContainer }}>
+        <KeyboardAvoidingView style={focus ? { ...styles.inputContainer, borderColor: '#1652f0' } : { ...styles.inputContainer }}>
           <FontAwesome name="search" size={18} color={"black"} style={{ marginBottom: 10 }} />
           <TextInput
             style={{ ...styles.input }}
@@ -223,7 +224,7 @@ const Trades = ({ navigation }) => {
             }}
 
           />
-        </View>
+        </KeyboardAvoidingView>
 
         <View style={styles.moversection}>
           <View style={styles.moversectionheading}>

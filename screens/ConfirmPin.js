@@ -40,7 +40,7 @@ const ConfirmPin = ({ navigation }) => {
     })
 
 
-    let dollarPriceUi = (data) => {
+    let dataUi = (data) => {
         data = data.toString()
 
         //convert string to an array
@@ -178,7 +178,7 @@ const ConfirmPin = ({ navigation }) => {
 
                     <View style={styles.dollarPriceCon}>
 
-                        {dollarPriceUi((value))}
+                        {dataUi((value))}
 
                     </View>
 

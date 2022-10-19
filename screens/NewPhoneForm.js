@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions, ActivityIndicator } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions, ActivityIndicator,KeyboardAvoidingView } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from "react-redux";
 import { changePhone } from "../store/action/appStorage";
@@ -85,7 +85,7 @@ const NewPhone = ({ navigation }) => {
 
 
 
-                <View style={styles.formContainer}>
+                <KeyboardAvoidingView style={styles.formContainer}>
 
                     <View style={styles.CodeCon}>
 
@@ -100,7 +100,7 @@ const NewPhone = ({ navigation }) => {
 
                     </View>
 
-                </View>
+                </KeyboardAvoidingView>
 
 
                 <View style={styles.buttonContainer}>
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     },
     buttonContinue: {
         width: '100%',
-        paddingVertical: 15,
+        paddingVertical: 17,
         borderRadius: 30,
         backgroundColor: '#1652f0',
         marginBottom: 20,

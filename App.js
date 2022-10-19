@@ -28,20 +28,30 @@ export default function App() {
   //creating store
   const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
-  let loadFonts = async () => {
+  
+
+  useEffect(() => {
+    let isSuscribe = true
+    let loadFonts = async () => {
     try {
       await Font.loadAsync({
         'ABeeZee': require('./assets/fonts/ABeeZee-Regular.ttf'),
         'Poppins': require('./assets/fonts/Poppins-Medium.ttf'),
       });
-      setIsLoading(false)
+      if(isSuscribe){
+        setIsLoading(false)
+
+      }
+
     } catch (err) {
       console.log(err)
     }
   }
 
-  useEffect(() => {
     loadFonts()
+    return ()=>{
+      isSuscribe = false
+    }
   }, [loadFonts])
 
  

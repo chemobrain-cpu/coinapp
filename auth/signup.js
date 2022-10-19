@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions,ActivityIndicator } from 'react-native'
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, ScrollView, Dimensions,ActivityIndicator ,KeyboardAvoidingView} from 'react-native'
 import CheckBox from 'expo-checkbox'
 import { AntDesign } from '@expo/vector-icons';
 import * as Progress from 'react-native-progress'
@@ -60,11 +60,7 @@ const Signup = ({ navigation }) => {
     }
     const changePassword = (e) => {
         setPassword(e)
-        let error = validateText(e)
-        if (error) {
-            return setPasswordError(error)
-        }
-        return setPasswordError('')
+       
 
     }
    useEffect(() => {
@@ -72,7 +68,7 @@ const Signup = ({ navigation }) => {
             e.preventDefault();
             setModalVisible(true)
         });
-        
+        return focus
     }, [navigation]);
     
 
@@ -80,7 +76,6 @@ const Signup = ({ navigation }) => {
     let formValid = firstName && lastName && email && password && !firstNameError && !lastNameError && !emailError && !passwordError
 
     let navigateHandler = () => {
-        navigation.removeListener('beforeRemove')
         setModalVisible(false)
         setTimeout(() => { navigation.goBack() }, 1000)
     }
@@ -156,7 +151,7 @@ const Signup = ({ navigation }) => {
                 <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 30, zIndex: 5, paddingBottom: 100 }}>
                     <Text style={styles.headerText}>Create your account</Text>
 
-                    <View>
+                    <KeyboardAvoidingView>
                         <Text style={styles.emailText}>First Name</Text>
 
                         <TextInput
@@ -193,12 +188,14 @@ const Signup = ({ navigation }) => {
                             style={styles.input}
                             onChangeText={changePassword}
                             value={password}
+                            maxLength={5}
                             placeholder="Password"
+                             keyboardType='numeric'
                         />
 
 
 
-                    </View>
+                    </KeyboardAvoidingView>
 
                     <View style={styles.forgetPasswordCon}>
                         <TouchableOpacity style={styles.checkboxCon}>

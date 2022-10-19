@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         width: Dimensions.get('window').width,
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
     },
     containerLeft: {
         display: 'flex',
