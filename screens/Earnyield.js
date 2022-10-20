@@ -44,7 +44,7 @@ const Earn = ({ navigation }) => {
 
                     <Text style={styles.infoHeading}>Earn up to 5.00% yield on your crypto</Text>
 
-                    <Text style={styles.infoText}>Did you know that your crypto can earn yield? All you have to do is hold certain assets,like DAI and USDC,in your Coinbase account and you'll start earning right away</Text>
+                    <Text style={styles.infoText}>Did you know that your crypto can earn yield? All you have to do is hold certain assets,like DAI and USDC,in your Coinapp account and you'll start earning right away</Text>
 
 
                 </View>

@@ -44,7 +44,7 @@ const EarnAsset = ({ navigation }) => {
 
                 <View style={styles.infoContainer}>
                     <Text style={styles.infoHeading}>Earn crypto by holding crypto</Text>
-                    <Text style={styles.infoText}>You can earn passive yield over time when you hold certain assets on Coinbase.Get started by buying or depositing a yield-earning asset today.</Text>
+                    <Text style={styles.infoText}>You can earn passive yield over time when you hold certain assets on Coincap.Get started by buying or depositing a yield-earning asset today.</Text>
 
                     <Text style={styles.linkText}>Learn more</Text>
 

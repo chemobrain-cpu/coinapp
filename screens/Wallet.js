@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, StyleSheet, Image, Dimensions, TextInput, Linking, Share } from 'react-native'
-import { Feather, MaterialCommunityIcons, MaterialIcons, Ionicons, FontAwesome, EvilIcons,FontAwesome5 } from '@expo/vector-icons';
-import * as Clipboard from 'expo-clipboard';
-import { Card } from "react-native-shadow-cards";
-import TopMovers from "../component/HomeTopMovers"
-import WatchList from '../component/HomeWatchList'
+import { Feather, MaterialCommunityIcons, MaterialIcons, Ionicons,EvilIcons} from '@expo/vector-icons';
+
 
 const Wallet = ({ navigation }) => {
     const [header, setHeader] = useState(false);
@@ -30,10 +27,6 @@ const Wallet = ({ navigation }) => {
 
     }
 
-
-
-
-
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewContainer} onScroll={scrollHandler} stickyHeaderIndices={[0]}>
@@ -42,7 +35,7 @@ const Wallet = ({ navigation }) => {
 
                     <TouchableOpacity onPress={() => navigation.goBack()} style={{ ...styles.goback }} >
                         <Feather name="arrow-left" size={24} color="rgb(44, 44, 44)" />
-                        <Text style={{ ...styles.headerName }}>Coinbase Wallet</Text>
+                        <Text style={{ ...styles.headerName }}>Coinapp Wallet</Text>
                     </TouchableOpacity>
                 </View>
 

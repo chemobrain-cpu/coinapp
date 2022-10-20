@@ -107,7 +107,7 @@ const Login = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
-                <Text style={styles.headerText}>Sign in to coinbase </Text>
+                <Text style={styles.headerText}>Sign in to coincap </Text>
                 <KeyboardAvoidingView>
                     <Text style={styles.emailText}>Email</Text>
                     <TextInput

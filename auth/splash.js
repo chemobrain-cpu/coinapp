@@ -34,7 +34,7 @@ let Splash = ({ navigation }) => {
                 updateVisibility={visibilityHandler}
             />
             <View style={{ ...styles.container, opacity: modalVisible ? 0.3 : 1 }}>
-                <Text style={styles.text}>coinbase</Text>
+                <Text style={styles.text}>coincap</Text>
             </View>
         </SafeAreaView>
     )

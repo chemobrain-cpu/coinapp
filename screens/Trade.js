@@ -231,7 +231,7 @@ const Trades = ({ navigation }) => {
             <Text
               style={styles.moverlefttext}
             >
-              New on Coinbase
+              New on coinapp
             </Text>
 
             <TouchableOpacity onPress={() => navigateToList()}>

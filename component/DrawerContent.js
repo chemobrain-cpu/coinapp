@@ -5,7 +5,7 @@ import {
 
 import * as WebBrowser from 'expo-web-browser';
 import { View, Text, TouchableOpacity, StyleSheet,Image } from "react-native";
-import { MaterialIcons, Ionicons, Octicons, MaterialCommunityIcons, } from '@expo/vector-icons';
+import { MaterialIcons, Ionicons, Octicons,} from '@expo/vector-icons';
 import {truncate} from "../utils/util"
 
 
@@ -14,7 +14,7 @@ function CustomDrawerContent({ navigation, user }) {
     let navigateToBrowser = async (data) => {
 
 
-        if (data == 'cookie') {
+        if (data == 'cooincap') {
             //navigate to password reset page
             await WebBrowser.openBrowserAsync('http://192.168.42.227:8080')
         } else {
@@ -74,20 +74,15 @@ function CustomDrawerContent({ navigation, user }) {
 
 
 
-                <TouchableOpacity style={styles.content}>
-
-                    <MaterialCommunityIcons name="wallet-plus-outline" size={21} style={{ paddingTop: 10 }} />
-
-                    <Text style={styles.text}>Get Coinbase Wallet</Text>
-                </TouchableOpacity>
+                
 
 
 
 
 
                 <View style={styles.footer}>
-                    <TouchableOpacity onPress={() => navigateToBrowser('coinbase')}>
-                        <Text style={{ fontSize: 16, color: 'black', paddingLeft: 12, paddingTop: 10 }}>Coinbase .</Text>
+                    <TouchableOpacity onPress={() => navigateToBrowser('coincap')}>
+                        <Text style={{ fontSize: 16, color: 'black', paddingLeft: 12, paddingTop: 10 }}>Coincap .</Text>
 
                     </TouchableOpacity>
 

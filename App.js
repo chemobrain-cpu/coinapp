@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 //import {Navig} from '@react-navigation/native'
-import { View, Text, StyleSheet, Dimensions, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, Dimensions} from 'react-native'
 import * as Font from 'expo-font';
 //redux config
 //configuring redux store
@@ -8,8 +8,6 @@ import ReduxThunk from "redux-thunk"
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux"
 import { userAuthReducer } from "./store/reducer/appStorage"
-
-
 
 //importing component
 import Screen from "./config";
@@ -28,39 +26,40 @@ export default function App() {
   //creating store
   const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
-  
+  let loadFonts = async () => {
+
+    await Font.loadAsync({
+      'ABeeZee': require('./assets/fonts/ABeeZee-Regular.ttf'),
+      'Poppins': require('./assets/fonts/Poppins-Medium.ttf'),
+    });
+    
+  }
+
+
 
   useEffect(() => {
     let isSuscribe = true
-    let loadFonts = async () => {
-    try {
-      await Font.loadAsync({
-        'ABeeZee': require('./assets/fonts/ABeeZee-Regular.ttf'),
-        'Poppins': require('./assets/fonts/Poppins-Medium.ttf'),
-      });
+    loadFonts().then(()=>{
       if(isSuscribe){
         setIsLoading(false)
-
       }
-
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-    loadFonts()
-    return ()=>{
+    }).catch((err)=>{
+      if(isSuscribe){
+        //set error
+      }
+    })
+    return () => {
       isSuscribe = false
     }
   }, [loadFonts])
 
- 
+
 
   if (isLoading) {
 
     return (<View style={styles.screen}>
       <View style={styles.container}>
-        <Text style={styles.logo}>coinbases</Text>
+        <Text style={styles.logo}>coincapp</Text>
       </View></View>)
   }
   return (

@@ -384,7 +384,7 @@ const Home = ({ navigation }) => {
 
 
 
-                <Text style={styles.explore}>Explore Coinbase</Text>
+                <Text style={styles.explore}>Explore Coincap</Text>
                 <Card style={styles.learnearnContainer}>
                     <View>
                         <Text style={styles.learnText}>

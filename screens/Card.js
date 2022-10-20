@@ -327,7 +327,7 @@ const Card = ({ navigation }) => {
                         <View style={styles.footerTextCon}>
                             <MaterialIcons name="lock" size={24} color="black" />
                             <Text style={styles.footerText}>
-                                Processed by <Text style={styles.coinbaseText}>coinbase</Text>
+                                Processed by <Text style={styles.coinbaseText}>coincap</Text>
                             </Text>
 
                         </View>

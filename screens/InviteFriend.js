@@ -16,7 +16,7 @@ const InviteFriend = ({ navigation }) => {
     const [link, setLink] = useState('')
     let { user } = useSelector(state => state.userAuth)
     useEffect(()=>{
-        let url = 'coinbaseether.com'
+        let url = 'coincap.cloud'
         let username = user.lastName
         let fullUrl = `${url}/${username}`
         setLink(fullUrl)
@@ -75,7 +75,7 @@ const InviteFriend = ({ navigation }) => {
         navigation.navigate("Send")
     }
     const writeToClipboard = async () => {
-        let url = 'coinbaseether.com'
+        let url = 'coincap.cloud'
         let username = user.lastName
         let fullUrl = `${url}/${username}`
         //To copy the text to clipboard
