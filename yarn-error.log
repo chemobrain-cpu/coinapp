@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\preciousarierhi\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add react-redux redux redux-thunk
+  C:\Program Files\nodejs\node.exe C:\Users\preciousarierhi\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @expo/config-plugins@4.1.0
 
 PATH: 
   C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files (x86)\Git\cmd;C:\Program Files\Amazon\AWSCLIV2\;C:\Users\preciousarierhi;C:\Users\preciousarierhi\AppData\Roaming\npm;C:\Users\preciousarierhi\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\preciousarierhi\AppData\Local\hyper\app-3.0.2\resources\bin;C:\Program Files\OpenSSL-Win64\bin;C:\Program Files\heroku\bin;
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EPERM: operation not permitted, unlink 'C:\Users\preciousarierhi\coinbase\coinbaseApp\node_modules\@ant-design\react-native\node_modules\react-native-codegen\node_modules\.bin'
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\preciousarierhi\AppData\Local\Yarn\Cache\v6\npm-json5-2.2.1-655d50ed1e6f95ad1a3caababd2b0efda10b395c-integrity\node_modules\json5\LICENSE.md' -> 'C:\Users\preciousarierhi\coinbase\coinbaseApp\node_modules\@babel\core\node_modules\json5\LICENSE.md'
 
 npm manifest: 
   {
@@ -70,9 +70,9 @@ npm manifest:
       "react-native-snap-carousel": "^3.9.1",
       "react-native-wagmi-charts": "^2.1.0",
       "react-native-web": "0.17.7",
-      "react-redux": "8.0.2",
-      "redux": "4.2.0",
-      "redux-thunk": "2.4.1",
+      "react-redux": "^8.0.4",
+      "redux": "^4.2.0",
+      "redux-thunk": "^2.4.1",
       "socket.io-client": "4.5.1"
     },
     "devDependencies": {
@@ -6681,10 +6681,10 @@ Lockfile:
       whatwg-fetch "^3.0.0"
       ws "^6.1.4"
   
-  react-redux@8.0.2:
-    version "8.0.2"
-    resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.0.2.tgz#bc2a304bb21e79c6808e3e47c50fe1caf62f7aad"
-    integrity sha512-nBwiscMw3NoP59NFCXFf02f8xdo+vSHT/uZ1ldDwF7XaTpzm+Phk97VT4urYBl5TYAPNVaFm12UHAEyzkpNzRA==
+  react-redux@^8.0.4:
+    version "8.0.4"
+    resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.0.4.tgz#80c31dffa8af9526967c4267022ae1525ff0e36a"
+    integrity sha512-yMfQ7mX6bWuicz2fids6cR1YT59VTuT8MKyyE310wJQlINKENCeT1UcPdEiX6znI5tF8zXyJ/VYvDgeGuaaNwQ==
     dependencies:
       "@babel/runtime" "^7.12.1"
       "@types/hoist-non-react-statics" "^3.3.1"
@@ -6760,12 +6760,12 @@ Lockfile:
       prop-types "15.8.1"
       ts-object-utils "0.0.5"
   
-  redux-thunk@2.4.1:
+  redux-thunk@^2.4.1:
     version "2.4.1"
     resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.1.tgz#0dd8042cf47868f4b29699941de03c9301a75714"
     integrity sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q==
   
-  redux@4.2.0:
+  redux@^4.2.0:
     version "4.2.0"
     resolved "https://registry.yarnpkg.com/redux/-/redux-4.2.0.tgz#46f10d6e29b6666df758780437651eeb2b969f13"
     integrity sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==

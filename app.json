@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "coinbaseApp",
-    "slug": "coinbaseApp",
+    "name": "coincap",
+    "slug": "coincap",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme":"com.chemobrain.coinbaseclone",
+    "scheme": "com.chemobrain.coinbaseclone",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -22,8 +22,9 @@
       "supportsTablet": true
     },
     "android": {
-      "package":"com.chemobrain.coinbaseclone",
-      "googleServicesFile":"./google-services.json",
+      "package": "com.chemobrain.coinbaseclone",
+      "versionCode": 1,
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -43,6 +44,11 @@
           ]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6b7d259f-2796-4854-bcfe-eb9204f20b04"
+      }
+    }
   }
 }
