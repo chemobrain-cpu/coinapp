@@ -7,11 +7,15 @@
     "icon": "./assets/icon.png",
     "scheme": "com.chemobrain.coinbaseclone",
     "userInterfaceStyle": "light",
+    "sdkVersion": "45.0.0",
     "splash": {
-      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#1652f0"
     },
+    
+
+ 
+
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -19,7 +23,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-xxxxxx"
+      }
     },
     "android": {
       "package": "com.chemobrain.coinbaseclone",
@@ -28,6 +35,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-xxxxxx"
       }
     },
     "web": {
